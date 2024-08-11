@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+</head>
+<body>
+    <h1>WebSocket Test</h1>
+    <input id="message" type="text" placeholder="Type a message" />
+    <button onclick="sendMessage()">Send</button>
+    <div id="response"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('message', (msg) => {
+            document.getElementById('response').innerText = msg;
+        });
+
+        function sendMessage() {
+            const message = document.getElementById('message').value;
+            socket.emit('message', message);
+        }
+    </script>
+</body>
+</html>
