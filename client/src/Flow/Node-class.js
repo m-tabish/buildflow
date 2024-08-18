@@ -1,5 +1,5 @@
 class Node {
-    constructor(id, position, data) {
+    constructor(id, position, data, code) {
         this.id = id;
         this.position = position;
         this.data = data;
@@ -9,6 +9,7 @@ class Node {
         this.targetPosition = "left";
         this.height = 180
         this.width = 150
+        this.code = code
     }
 }
 

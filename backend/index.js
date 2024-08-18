@@ -42,6 +42,22 @@ app.get("/projects", async (req, res) => {
 })
 
 
+
+app.get("/projects/:id", async (req, res) => {
+    try {
+        const projectId = req.params['id']
+        const project = await Project.find({ _id: projectId })
+        if (project)
+            res.send(project)
+        else
+            res.status(404).send("Not found")
+    }
+    catch (e) {
+        res.status(500).send({ msg: e })
+    }
+})
+
+
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 });
