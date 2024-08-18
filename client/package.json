@@ -13,8 +13,10 @@
     "@xyflow/react": "^12.0.4",
     "axios": "^1.7.3",
     "client": "file:",
+    "dagre": "^0.8.5",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-flow": "^1.0.3"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
