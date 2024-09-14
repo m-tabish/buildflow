@@ -5,10 +5,11 @@ export let initialEdges = [];
 
 export default async function getData() {
   try {
-    const response = await axios.get("http://localhost:3000/projects/66e57a63d6454e1adc4641ec");
+    const response = await axios.get("http://localhost:3000/projects/66e581aa25ca65252c50e653");
 
     if (response) {
       const children = response.data[0].steps;
+
 
       // Mapping nodes
       initialNodes = children.nodes.map((item) => {
@@ -16,8 +17,11 @@ export default async function getData() {
         if (nodeId) {
           return {
             id: nodeId,
-            data: { label: item.process },
-            position: { x: 0, y: 0 }, // Set default position
+            data: { label: item.process || "step" },
+            position: { x: 0, y: parseInt(nodeId) * 100 }, // Set default position
+            draggable: false,
+            resizing: true,
+            nodeType: "group"
           };
         }
         return null; // Filter out invalid nodes
@@ -33,7 +37,8 @@ export default async function getData() {
             id: `${source}-${target}`,
             source: source,
             target: target,
-            type: "smoothstep",
+            type: "default",
+            style: { stroke: "white" }
           };
         }
         return null; // Filter out invalid edges

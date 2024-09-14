@@ -6,20 +6,22 @@ import {
     MiniMap,
     Panel,
     ReactFlow,
+    ReactFlowProvider,
     useEdgesState,
     useNodesState
 } from '@xyflow/react';
 import dagre from 'dagre';
-import { useCallback, useEffect, useState } from 'react';
-import getData from "./nodes-edges";
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import getData from "../Flow/nodes-edges";
 
 import '@xyflow/react/dist/style.css';
+import CustomNode from './Custom-node';
 
 const nodeWidth = 172;
 const nodeHeight = 36;
 
 // Function to layout nodes and edges using Dagre
-const getLayoutedElements = (nodes, edges, direction = 'LR') => {
+const getLayoutedElements = (nodes, edges, direction = 'TB') => {
     const dagreGraph = new dagre.graphlib.Graph();
     const isHorizontal = direction === 'LR';
 
@@ -29,7 +31,7 @@ const getLayoutedElements = (nodes, edges, direction = 'LR') => {
     nodes.forEach((node) => {
         dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
     });
-
+    console.log(JSON.stringify(edges))
     edges.forEach((edge) => {
         dagreGraph.setEdge(edge.source, edge.target);
     });
@@ -46,6 +48,7 @@ const getLayoutedElements = (nodes, edges, direction = 'LR') => {
                 x: nodeWithPosition.x - nodeWidth / 2,
                 y: nodeWithPosition.y - nodeHeight / 2,
             },
+            type: 'customNode'
         };
     });
 
@@ -56,7 +59,8 @@ const LayoutFlow = () => {
     const [loading, setLoading] = useState(true);
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-    const [colorMode, setColorMode] = useState('dark')
+    const [colorMode, setColorMode] = useState('dark');
+    const nodeTypes = useMemo(() => ({ customNode: CustomNode }), []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -88,6 +92,7 @@ const LayoutFlow = () => {
         },
         [edges, nodes, setEdges, setNodes]
     );
+
     const onChange = (evt) => {
         setColorMode(evt.target.value);
     };
@@ -106,6 +111,8 @@ const LayoutFlow = () => {
             connectionLineType={ConnectionLineType.SmoothStep}
             fitView
             colorMode={colorMode}
+            nodeTypes={nodeTypes}
+            draggable={false}
         >
             <MiniMap onNodeClick={() => console.log("node clicked")}></MiniMap>
             <Panel position="top-right">
@@ -120,9 +127,14 @@ const LayoutFlow = () => {
                 </select>
             </Panel>
             <Controls />
-
         </ReactFlow>
     );
 };
 
-export default LayoutFlow;
+export default function WrappedLayoutFlow() {
+    return (
+        <ReactFlowProvider>
+            <LayoutFlow />
+        </ReactFlowProvider>
+    );
+}

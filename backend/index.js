@@ -14,7 +14,9 @@ app.get("/", (req, res) => {
     res.send("hello");
 });
 
-//gemini
+
+
+//------------------------------GEMINI-----------------------------------------//
 
 app.post("/create-project", async (req, res) => {
     try {
@@ -30,6 +32,9 @@ app.post("/create-project", async (req, res) => {
         res.status(500).send({ msg: "Response not generated" + e });
     }
 });
+
+
+//---------------------------------GET---------------------------------------//
 
 app.get("/projects", async (req, res) => {
     try {
@@ -57,16 +62,11 @@ app.get("/projects/:id", async (req, res) => {
     }
 })
 
-app.post('/create', async (req, res) => {
-    try {
-        const { projectname, language } = req.body;
-        const result = await Project.create({ projectname, language  })
-        res.send("Fields entered succesfully")
-    } catch (e) {
-        console.log(e)
-        res.status(500).send("Error inserting fields")
-    }
-})
+
+
+
+//---------------------------------LISTEN---------------------------------------//
+
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 });
