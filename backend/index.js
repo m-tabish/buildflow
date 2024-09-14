@@ -21,8 +21,8 @@ app.post("/create-project", async (req, res) => {
         const result = await generateContent(req.body);
         const { projectname, language } = req.body;
         // console.log(result.response.text());
-        const steps = JSON.parse(result.response.text())
-        console.log(typeof (steps));
+        const steps = JSON.parse(result)
+        // console.log(typeof (steps));
         await Project.create({ projectname, language, steps });
         res.status(200).send("Response Generated");
     } catch (e) {
@@ -57,7 +57,16 @@ app.get("/projects/:id", async (req, res) => {
     }
 })
 
-
+app.post('/create', async (req, res) => {
+    try {
+        const { projectname, language } = req.body;
+        const result = await Project.create({ projectname, language  })
+        res.send("Fields entered succesfully")
+    } catch (e) {
+        console.log(e)
+        res.status(500).send("Error inserting fields")
+    }
+})
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 });

@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 // src/components/ElkGraph.js
 import axios from "axios";
+import { log } from "console";
 import ELK from 'elkjs/lib/elk.bundled';
 import { useEffect, useState } from 'react';
 
@@ -14,8 +15,9 @@ const ElkGraph = () => {
 
         async function getData() {
             try {
-                const response = await axios.get("http://localhost:3000/projects/66bdc6f03c7f3f0e12641042");
+                const response = await axios.get("http://localhost:3000/projects/66e57a63d6454e1adc4641ec");
                 const children = response.data[0].steps;
+                console.log("---- \n" + children);
 
                 if (children) {
                     nodes = children.nodes.map(item => {
