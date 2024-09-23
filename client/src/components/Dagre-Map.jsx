@@ -31,7 +31,7 @@ const getLayoutedElements = (nodes, edges, direction = 'TB') => {
     nodes.forEach((node) => {
         dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
     });
-    console.log(JSON.stringify(edges))
+    // console.log(JSON.stringify(edges))
     edges.forEach((edge) => {
         dagreGraph.setEdge(edge.source, edge.target);
     });
