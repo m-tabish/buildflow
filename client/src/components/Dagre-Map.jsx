@@ -111,14 +111,15 @@ const LayoutFlow = () => {
             connectionLineType={ConnectionLineType.SmoothStep}
             fitView
             colorMode={colorMode}
-            nodeTypes={nodeTypes}
-            draggable={false}
+            nodeTypes={nodeTypes} 
+            preventScrolling = {false}
+            panOnDrag = {false}
         >
             <MiniMap onNodeClick={() => console.log("node clicked")}></MiniMap>
-            <Panel position="top-right">
+            {/* <Panel position="top-right" className='text-white'>
                 <button onClick={() => onLayout('TB')}>Vertical Layout</button>
                 <button onClick={() => onLayout('LR')}>Horizontal Layout</button>
-            </Panel>
+            </Panel> */}
             <Panel position="top-right">
                 <select onChange={onChange} data-testid="colormode-select">
                     <option value="dark">dark</option>

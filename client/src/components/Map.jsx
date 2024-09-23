@@ -5,10 +5,7 @@ import LayoutFlow from "./Dagre-Map.jsx"
 function Map() {
     return (
         <div className="w-screen h-screen">
-            {/* <ElkGraph /> */}
-            <LayoutFlow />
-       
-
+            <LayoutFlow /> 
         </div>
     )
 }

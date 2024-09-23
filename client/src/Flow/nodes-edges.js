@@ -5,7 +5,7 @@ export let initialEdges = [];
 
 export default async function getData() {
   try {
-    const response = await axios.get("http://localhost:3000/projects/66e581aa25ca65252c50e653");
+    const response = await axios.get("http://localhost:3000/projects/66ed97b7a6d338ac36f025ed");
 
     if (response) {
       const children = response.data[0].steps;
@@ -17,7 +17,8 @@ export default async function getData() {
         if (nodeId) {
           return {
             id: nodeId,
-            data: { label: item.process || "step" },
+            // Passing item object in the custom-node
+            data: { label: JSON.stringify(item) || "step x" },
             position: { x: 0, y: parseInt(nodeId) * 100 }, // Set default position
             draggable: false,
             resizing: true,
