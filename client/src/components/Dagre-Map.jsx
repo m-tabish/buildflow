@@ -110,8 +110,7 @@ const LayoutFlow = () => {
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             connectionLineType={ConnectionLineType.SmoothStep}
-            fitView
-            fitViewOptions={}
+            fitView 
             maxZoom={1}
             colorMode={colorMode}
             nodeTypes={nodeTypes}
