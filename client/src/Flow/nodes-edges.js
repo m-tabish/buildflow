@@ -18,7 +18,7 @@ export default async function getData() {
           return {
             id: nodeId,
             // Passing item object in the custom-node
-            data: { label: JSON.stringify(item) || "step x" },
+            data: { label: JSON.stringify(item) || {project: "stepx", language: "python"} },
             position: { x: 0, y: parseInt(nodeId) * 100 }, // Set default position
             draggable: false,
             resizing: true,

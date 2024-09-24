@@ -10,13 +10,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@radix-ui/react-scroll-area": "^1.1.0",
+    "@radix-ui/react-slot": "^1.1.0",
     "@xyflow/react": "^12.0.4",
     "axios": "^1.7.3",
+    "class-variance-authority": "^0.7.0",
     "client": "file:",
+    "clsx": "^2.1.1",
     "dagre": "^0.8.5",
+    "embla-carousel-react": "^8.3.0",
+    "lucide-react": "^0.445.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-flow": "^1.0.3"
+    "react-flow": "^1.0.3",
+    "tailwind-merge": "^2.5.2",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
