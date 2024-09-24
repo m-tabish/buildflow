@@ -103,35 +103,39 @@ const LayoutFlow = () => {
     }
 
     return (
-        <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            connectionLineType={ConnectionLineType.SmoothStep}
-            fitView 
-            maxZoom={1}
-            colorMode={colorMode}
-            nodeTypes={nodeTypes}
-            preventScrolling={false}
-            noWheelClassName='nowheel'
-            panOnDrag={true}
-        >
-            <MiniMap onNodeClick={() => console.log("node clicked")}></MiniMap>
-            <Panel position="top-right" className='text-white'>
-                <button onClick={() => onLayout('TB')}>Vertical Layout</button>
-                <button onClick={() => onLayout('LR')}>Horizontal Layout</button>
-            </Panel>
-            <Panel position="top-right">
-                <select onChange={onChange} data-testid="colormode-select">
-                    <option value="dark">dark</option>
-                    <option value="light">light</option>
-                    <option value="system">system</option>
-                </select>
-            </Panel>
-            <Controls />
-        </ReactFlow>
+        <div className='w-full  h-full '>
+
+            <ReactFlow
+                nodes={nodes}
+                edges={edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                onConnect={onConnect}
+                connectionLineType={ConnectionLineType.SmoothStep}
+                // snapToGrid={true}
+                fitView
+                translateExtent = {[[-Infinity,-Infinity], [ Infinity,Infinity]]}
+                colorMode={colorMode}
+                nodeTypes={nodeTypes}
+                preventScrolling={false}
+                noWheelClassName='nowheel'
+                panOnDrag={true}
+            >
+
+                <Panel position="top-right" className='text-white'>
+                    <button onClick={() => onLayout('TB')}>Vertical Layout</button>
+                    <button onClick={() => onLayout('LR')}>Horizontal Layout</button>
+                </Panel>
+                <Panel position="top-right">
+                    <select onChange={onChange} data-testid="colormode-select">
+                        <option value="light">light</option>
+                        <option value="dark">dark</option>
+                        <option value="system">system</option>
+                    </select>
+                </Panel>
+
+            </ReactFlow>
+        </div >
     );
 };
 

@@ -2,30 +2,41 @@
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { addProject } from "./slices/projectSlice";
-function Home() {
+function App() {
   const userInput = useSelector(state => state.userInput);
   const [input, setInput] = useState({
     project: "",
     language: ""
   });
   const dispatch = useDispatch();
-
+  const navigate = useNavigate()
   const handleSubmit = (e) => {
-    e.preventDefault();
-    // Dispatching the addProject action with the current input
-    dispatch(addProject({
-      project: input.project,
-      language: input.language
-    }));
+    if (input) {
+      e.preventDefault();
+      // Dispatching the addProject action with the current input
+      dispatch(addProject({
+        project: input.project,
+        language: input.language
+      }));
 
-    //calling the function to post request to GenAI API
-    postInput(input)
-    // Reset input fields
-    setInput({
-      project: "",
-      language: ""
-    });
+      //calling the function to post request to GenAI API
+      postInput(input)
+      // Reset input fields
+      setInput({
+        project: "",
+        language: ""
+      });
+      //navigate to the generated map
+      if(input)
+      //----------------------0 implemente if the page loaded then map else loading---------------------------------
+      navigate("/map")
+
+    }
+    else {
+      console.alert("No response")
+    }
   };
 
   //sending the user input to the GenAI API using post method
@@ -44,35 +55,43 @@ function Home() {
   }
 
   return (
-    <div className='border h-auto p-2 gap-2 flex flex-col'>
-      <label className='text-3xl'>Enter project</label>
-      <form onSubmit={handleSubmit} className='flex gap-2'
-      >
-        <input
-          type="text"
-          className='border border-black'
-          value={input.project}
-          onChange={(e) => setInput({ ...input, project: e.target.value })}
-          placeholder="Project Name"
-          required
-          minLength={10}
-
-        />
-        <input type="text"
-          className="border border-black"
-          onChange={(e) => setInput({ ...input, language: e.target.value })}
-          placeholder="Languages,Frameworks " />
-
-        <button
-          type='submit'
-          className='border border-black bg-red-400 text-2xl font-bold text-white p-1'
+    <div className='   border  flex  border-black min-w-screen min-h-screen justify-center items-center'>
+      <div className="flex flex-col gap-2">
+        <label className='text-3xl text-center  font-serif '>Enter project</label>
+        <form onSubmit={handleSubmit} className=' flex flex-col  gap-2'
         >
-          Submit
-        </button>
-      </form>
-      <div className="flex-1">Project: {userInput.project || "No project added"} , Language: {userInput.language || "None"}</div>
+          <textarea
+            type="text"
+            className='border border-black'
+
+            value={input.project}
+            onChange={(e) => setInput({ ...input, project: e.target.value })}
+            placeholder="Explain your idea here"
+            required
+            minLength={10}
+
+          />
+          <input type="text"
+            className="border border-black"
+            onChange={(e) => setInput({ ...input, language: e.target.value })}
+            placeholder="Languages,Frameworks "
+            required
+            defaultValue={""}
+            minLength={1} />
+
+          <button
+            type='submit'
+            className='border border-black bg-red-400 text-2xl font-bold text-white p-1 shadow-lg'
+
+          >
+            Submit
+          </button>
+        </form>
+        <div className="flex-1">Project: {userInput.project || "No project added"} , Language: {userInput.language || "None"}</div>
+
+      </div>
     </div>
   );
 }
 
-export default Home;
+export default App;
