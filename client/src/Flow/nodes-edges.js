@@ -5,7 +5,7 @@ export let initialEdges = [];
 
 export default async function getData() {
   try {
-    const response = await axios.get("http://localhost:3000/projects/66ed97b7a6d338ac36f025ed");
+    const response = await axios.get("http://localhost:3000/projects/66f243a5440f594bf4227f9b");
 
     if (response) {
       const children = response.data[0].steps;

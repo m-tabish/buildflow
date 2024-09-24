@@ -16,17 +16,16 @@ app.get("/", (req, res) => {
 
 
 
-//------------------------------GEMINI-----------------------------------------//
+//------------------------------GenAI API-----------------------------------------//
 
 app.post("/create-project", async (req, res) => {
     try {
+    //generateContent contains GenAI API function it returns the nodes,edges,steps in json
         const result = await generateContent(req.body);
-        const { projectname, language } = req.body;
-        // console.log(result.response.text());
-        const steps = JSON.parse(result)
-        // console.log(typeof (steps));
-        await Project.create({ projectname, language, steps });
-        res.status(200).send("Response Generated");
+        const { projectname, language } = req.body; 
+        const steps = JSON.parse(result) 
+        const project = await Project.create({ projectname, language, steps });
+        res.status(201).json(project);
     } catch (e) {
         console.error("Error creating project:", e);
         res.status(500).send({ msg: "Response not generated" + e });

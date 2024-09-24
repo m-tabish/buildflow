@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     userInput: {
-        project: "Tic tac toe game",
-        language: "Python"
+        projectname: "",
+        language: ""
     }
 };
 
