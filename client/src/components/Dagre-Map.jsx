@@ -18,22 +18,20 @@ import '@xyflow/react/dist/style.css';
 import CustomNode from './Custom-node';
 
 const nodeWidth = 172;
-const nodeHeight = 36;
+const nodeHeight = 100;
 
-// Function to layout nodes and edges using Dagre
 // Function to layout nodes and edges using Dagre
 const getLayoutedElements = (nodes, edges, direction = 'TB') => {
     const dagreGraph = new dagre.graphlib.Graph();
     const isHorizontal = direction === 'LR';
 
-    // Set graph layout direction
-    dagreGraph.setGraph({ rankdir: direction });  // Ensure this is set to 'TB' for top-to-bottom
+    dagreGraph.setGraph({ rankdir: "TB" });
     dagreGraph.setDefaultEdgeLabel(() => ({}));
 
     nodes.forEach((node) => {
         dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
     });
-
+    // console.log(JSON.stringify(edges))
     edges.forEach((edge) => {
         dagreGraph.setEdge(edge.source, edge.target);
     });
@@ -42,9 +40,9 @@ const getLayoutedElements = (nodes, edges, direction = 'TB') => {
 
     const layoutedNodes = nodes.map((node) => {
         const nodeWithPosition = dagreGraph.node(node.id);
+
         return {
             ...node,
-            // Set target/source positions based on layout direction
             targetPosition: isHorizontal ? 'left' : 'top',
             sourcePosition: isHorizontal ? 'right' : 'bottom',
             position: {
@@ -57,7 +55,6 @@ const getLayoutedElements = (nodes, edges, direction = 'TB') => {
 
     return { nodes: layoutedNodes, edges };
 };
-
 
 const LayoutFlow = () => {
     const [loading, setLoading] = useState(true);
@@ -113,17 +110,20 @@ const LayoutFlow = () => {
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             connectionLineType={ConnectionLineType.SmoothStep}
-            // fitView
+            fitView
+            fitViewOptions={}
+            maxZoom={1}
             colorMode={colorMode}
-            nodeTypes={nodeTypes} 
-            // preventScrolling = {false}
-            panOnDrag = {true}
+            nodeTypes={nodeTypes}
+            preventScrolling={false}
+            noWheelClassName='nowheel'
+            panOnDrag={true}
         >
             <MiniMap onNodeClick={() => console.log("node clicked")}></MiniMap>
-                <Panel position="top-right" className='text-white'>
-                    <button onClick={() => onLayout('TB')}>Vertical Layout</button>
-                    <button onClick={() => onLayout('LR')}>Horizontal Layout</button>
-                </Panel>
+            <Panel position="top-right" className='text-white'>
+                <button onClick={() => onLayout('TB')}>Vertical Layout</button>
+                <button onClick={() => onLayout('LR')}>Horizontal Layout</button>
+            </Panel>
             <Panel position="top-right">
                 <select onChange={onChange} data-testid="colormode-select">
                     <option value="dark">dark</option>

@@ -5,7 +5,7 @@ export let initialEdges = [];
 
 export default async function getData() {
   try {
-    const response = await axios.get("http://localhost:3000/projects/66f243a5440f594bf4227f9b");
+    const response = await axios.get("http://localhost:3000/projects/66f2507286319bd3bed3e31a");
 
     if (response) {
       const children = response.data[0].steps;
@@ -39,7 +39,7 @@ export default async function getData() {
             source: source,
             target: target,
             type: "default",
-            style: { stroke: "white" }
+            style: { stroke: "red" }
           };
         }
         return null; // Filter out invalid edges
