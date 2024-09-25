@@ -3,186 +3,131 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import AllProjects from "./components/AllProjects";
 import { Button } from "./components/ui/button";
+import { Input } from "./components/ui/input";
 import { Textarea } from "./components/ui/textarea";
 import { addProject } from "./slices/projectSlice";
 
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-
 function App() {
+  // Stores all the projects made till now 
+  const [projects, setProjects] = useState([]);
 
-  //stores all the projects made till now 
-  const [projects, setProjects] = useState("")
+  // Fetches all the projects
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        console.log("useeffect running");
-
+        console.log("useEffect running");
         const projectsData = await axios.get("http://localhost:3000/projects");
         setProjects(projectsData.data); // Setting the fetched projects to state
-        console.log(projects);
-
-
+        console.log(projectsData.data);
       } catch (error) {
         console.error("Error fetching projects:", error);
       }
-
     };
-    fetchProjects()
-  }, [setProjects])
-
+    fetchProjects();
+  }, []);
 
   const userInput = useSelector(state => state.userInput);
   const [input, setInput] = useState({
     project: "",
+    projectDescription: "",
     language: ""
   });
+  const [errorGenerating, setErrorGenerating] = useState(false)
+
   const dispatch = useDispatch();
-  const navigate = useNavigate()
-  const handleSubmit = (e) => {
-    if (input) {
-      e.preventDefault();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    setErrorGenerating(false)
+    e.preventDefault();
+    if (input.project && input.projectDescription && input.language) {
       // Dispatching the addProject action with the current input
       dispatch(addProject({
         project: input.project,
+        projectDescription: input.projectDescription,
         language: input.language
       }));
 
-      //calling the function to post request to GenAI API
-      postInput(input)
-      // Reset input fields
-      setInput({
-        project: "",
-        language: ""
-      });
-      //navigate to the generated map
-      if (input)
-        //----------------------0 implemente if the page loaded then map else loading---------------------------------
-        navigate("/map")
+      // Sending the user input to the GenAI API using post method
+      try {
+        console.log("Sending post request");
+        const response = await axios.post("http://localhost:3000/create-project", {
+          projectname: input.project,
+          projectDescription: input.projectDescription,
+          language: input.language
+        });
+        console.log("Post success", response.data._id);
+        setInput({
+          project: "",
+          projectDescription: "",
+          language: ""
+        });
+      } catch (e) {
+        setErrorGenerating(true)
+        console.error("Post request not sent", e);
+      }
 
-    }
-    else {
-      console.alert("No response")
+      // Reset input fields
     }
   };
-  //sending the user input to the GenAI API using post method
-  async function postInput(input) {
-    try {
-      console.log("sending post req");
-      const response = await axios.post("http://localhost:3000/create-project", {
-        projectname: input.project,
-        language: input.language
-      })
-      console.log("post success", response.data._id)
-      return response.data._id
-    }
-    catch (e) {
-      console.error("Post request not sent", e)
-    }
-  }
 
   return (
-    <div className="h-screen ">
-      <div className=' h-full flex flex-col border-black min-w-screen   justify-center items-center overflow-visible overscroll-contain  '>
-        <div className="   flex flex-col gap-2  scroll-my-0">
-          <label className='text-3xl text-center  font-serif '>Enter project</label>
-          <form onSubmit={handleSubmit} className=' flex flex-col  gap-2'
-          >
-            <Textarea
+    <div className="h-screen">
+      <div className='h-screen flex flex-col border-black min-w-screen justify-center items-center overflow-visible overscroll-contain'>
+        <div className="flex flex-col gap-2 scroll-my-0">
+          <label className='text-3xl text-center   font-mono'>Enter project</label>
+          <form onSubmit={handleSubmit} className='flex flex-col w-[300px] m-auto p-auto gap-2'>
+            <Input
               type="text"
               className='border border-black'
               value={input.project}
               onChange={(e) => setInput({ ...input, project: e.target.value })}
-              placeholder="Explain your idea here"
+              placeholder="Project Name"
               required
               minLength={10}
-
             />
-            <Textarea type="text"
+            <Textarea
+              type="text"
+              className="border border-black"
+              onChange={(e) => setInput({ ...input, projectDescription: e.target.value })}
+              placeholder="Description of your project"
+              value={input.projectDescription}
+              required
+              minLength={1}
+            />
+            <Input
+              type="text"
               className="border border-black"
               onChange={(e) => setInput({ ...input, language: e.target.value })}
-              placeholder="Languages,Frameworks "
+              placeholder="Languages, Frameworks"
+              value={input.language}
               required
-              defaultValue={""}
-              minLength={1} />
-
+              minLength={1}
+            />
             <Button
               type='submit'
               className='border border-black text-2xl font-bold text-white p-1 shadow-lg'
-
             >
               Submit
             </Button>
+            {errorGenerating && <div className="text-red-600"> Error Generating content kindly try again.</div>}
           </form>
-          <div className="flex-1">Project: {userInput.project || "No project added"} , Language: {userInput.language || "None"}</div>
+
 
         </div>
+        <div className="w-full text-center text-4xl mt-52 font-mono text-black">Check out some samples below
+         ⬇️</div>
+      </div >
+      <div className=" "> 
+        {projects && projects.map(project => (
+          <AllProjects project={project} key={project._id} />
+        ))}
       </div>
 
-      <div className=" grid  grid-cols-4  gap-3 items-center justify-center ">
-
-        {/* <Table >
-          <TableCaption className="font-bold text-3xl text-black">Some of the projects created till now</TableCaption>
-          <TableHeader className="">
-            <TableRow>
-              <TableHead className=" " >Project Idea</TableHead>
-              <TableHead>Language/Framework</TableHead>
-
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-
-            {projects && projects.map(project => {
-              return (<TableRow key={project._id}  >
-                <TableCell className="font-medium gap-48">{project.projectname.slice(0, 30)}</TableCell>
-                <TableCell>{project.language}</TableCell>
-
-              </TableRow>)
-            })}
-
-          </TableBody>
-      </Table> */}
-        {projects && projects.map((project, index) => {
-          index++
-          if (index <= 8) {
-            return (<Card key={project._id} className="">
-              <CardHeader>
-                <CardTitle>{project.projectname.slice(0,20)}</CardTitle>
-                <CardDescription>{project.language}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p>Card Content</p>
-              </CardContent>
-              <CardFooter>
-                <p>Card Footer</p>
-              </CardFooter>
-            </Card>)
-          }
-        })
-        }
-      </div >
-      <div className="h-[100px]"></div>
-
-    </div>
-
-
+      {/* <div className="h-[100px]"></div> */}
+    </div >
   );
 }
 
