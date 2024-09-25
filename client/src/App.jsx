@@ -17,6 +17,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 function App() {
 
@@ -91,8 +99,8 @@ function App() {
   }
 
   return (
-    <div>
-      <div className=' h-screen flex flex-col border-black min-w-screen min-h-screen justify-center items-center overflow-visible overscroll-contain  '>
+    <div className="h-screen ">
+      <div className=' h-full flex flex-col border-black min-w-screen   justify-center items-center overflow-visible overscroll-contain  '>
         <div className="   flex flex-col gap-2  scroll-my-0">
           <label className='text-3xl text-center  font-serif '>Enter project</label>
           <form onSubmit={handleSubmit} className=' flex flex-col  gap-2'
@@ -128,8 +136,9 @@ function App() {
         </div>
       </div>
 
-      <Table >
-        <div className="relative m-auto w-full flex flex-col items-center justify-center ">
+      <div className=" grid  grid-cols-4  gap-3 items-center justify-center ">
+
+        {/* <Table >
           <TableCaption className="font-bold text-3xl text-black">Some of the projects created till now</TableCaption>
           <TableHeader className="">
             <TableRow>
@@ -149,9 +158,31 @@ function App() {
             })}
 
           </TableBody>
-        </div>
-      </Table>
-    </div >
+      </Table> */}
+        {projects && projects.map((project, index) => {
+          index++
+          if (index <= 8) {
+            return (<Card key={project._id} className="">
+              <CardHeader>
+                <CardTitle>{project.projectname.slice(0,20)}</CardTitle>
+                <CardDescription>{project.language}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p>Card Content</p>
+              </CardContent>
+              <CardFooter>
+                <p>Card Footer</p>
+              </CardFooter>
+            </Card>)
+          }
+        })
+        }
+      </div >
+      <div className="h-[100px]"></div>
+
+    </div>
+
+
   );
 }
 
