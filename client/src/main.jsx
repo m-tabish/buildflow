@@ -2,8 +2,8 @@
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import App from './App.jsx'
-import Map from './components/Map.jsx'
+import App from './App.jsx' 
+import DagreMap from "./components/Dagre-Map.jsx"
 import './index.css'
 import store from './store/store.js'
 const router = createBrowserRouter(
@@ -14,8 +14,8 @@ const router = createBrowserRouter(
       element: <App />
     },
     {
-      path: "/map",
-      element: <Map />
+      path: "/map/:id",
+      element: <DagreMap />
     }
   ]
 )

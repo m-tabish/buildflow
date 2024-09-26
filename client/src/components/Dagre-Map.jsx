@@ -13,9 +13,10 @@ import {
 import dagre from 'dagre';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import getData from "../Flow/nodes-edges";
-
+import { useSelector } from 'react-redux';
 import '@xyflow/react/dist/style.css';
 import CustomNode from './Custom-node';
+import { useParams } from 'react-router-dom';
 
 const nodeWidth = 172;
 const nodeHeight = 100;
@@ -57,15 +58,16 @@ const getLayoutedElements = (nodes, edges, direction = 'TB') => {
 };
 
 const LayoutFlow = () => {
+    const { id } = useParams()
     const [loading, setLoading] = useState(true);
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [colorMode, setColorMode] = useState('dark');
     const nodeTypes = useMemo(() => ({ customNode: CustomNode }), []);
-
+    console.log("id here", id)
     useEffect(() => {
         const fetchData = async () => {
-            const { initialNodes, initialEdges } = await getData();
+            const { initialNodes, initialEdges } = await getData({ id });
             const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(initialNodes, initialEdges);
             setNodes(layoutedNodes);
             setEdges(layoutedEdges);
@@ -103,7 +105,7 @@ const LayoutFlow = () => {
     }
 
     return (
-        <div className='w-full  h-full '>
+        <div className='w-screen  h-screen '>
 
             <ReactFlow
                 nodes={nodes}
@@ -114,7 +116,7 @@ const LayoutFlow = () => {
                 connectionLineType={ConnectionLineType.SmoothStep}
                 // snapToGrid={true}
                 fitView
-                translateExtent = {[[-Infinity,-Infinity], [ Infinity,Infinity]]}
+                translateExtent={[[-Infinity, -Infinity], [Infinity, Infinity]]}
                 colorMode={colorMode}
                 nodeTypes={nodeTypes}
                 preventScrolling={false}

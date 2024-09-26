@@ -7,28 +7,12 @@ import AllProjects from "./components/AllProjects";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
 import { Textarea } from "./components/ui/textarea";
-import { addProject } from "./slices/projectSlice";
+import { addProject,viewProject } from "./slices/projectSlice";
 
 function App() {
   // Stores all the projects made till now 
   const [projects, setProjects] = useState([]);
-
-  // Fetches all the projects
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        console.log("useEffect running");
-        const projectsData = await axios.get("http://localhost:3000/projects");
-        setProjects(projectsData.data); // Setting the fetched projects to state
-        console.log(projectsData.data);
-      } catch (error) {
-        console.error("Error fetching projects:", error);
-      }
-    };
-    fetchProjects();
-  }, []);
-
-  const userInput = useSelector(state => state.userInput);
+  const [viewProject, setViewProject] = useState("")
   const [input, setInput] = useState({
     project: "",
     projectDescription: "",
@@ -39,6 +23,28 @@ function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+
+  const view = useSelector(state => state.viewProject)  
+
+
+
+  // Fetches all the projects
+  useEffect(() => {
+
+    const fetchProjects = async () => {
+      try { 
+        const projectsData = await axios.get("http://localhost:3000/projects");
+        setProjects(projectsData.data); 
+         
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      }
+    };
+    fetchProjects();
+  }, [input]);
+
+
+  //  Submit button function : Runs when submit is clicked
   const handleSubmit = async (e) => {
     setErrorGenerating(false)
     e.preventDefault();
@@ -68,8 +74,6 @@ function App() {
         setErrorGenerating(true)
         console.error("Post request not sent", e);
       }
-
-      // Reset input fields
     }
   };
 
@@ -77,7 +81,7 @@ function App() {
     <div className="h-screen">
       <div className='h-screen flex flex-col border-black min-w-screen justify-center items-center overflow-visible overscroll-contain'>
         <div className="flex flex-col gap-2 scroll-my-0">
-          <label className='text-3xl text-center   font-mono'>Enter project</label>
+          <label className='text-3xl text-center   font-mono'>Enter project {input.projectname}</label>
           <form onSubmit={handleSubmit} className='flex flex-col w-[300px] m-auto p-auto gap-2'>
             <Input
               type="text"
@@ -86,7 +90,7 @@ function App() {
               onChange={(e) => setInput({ ...input, project: e.target.value })}
               placeholder="Project Name"
               required
-              minLength={10}
+              minLength={1}
             />
             <Textarea
               type="text"
@@ -117,10 +121,11 @@ function App() {
 
 
         </div>
+        <div>Project clicked : {view}</div>
         <div className="w-full text-center text-4xl mt-52 font-mono text-black">Check out some samples below
-         ⬇️</div>
+          ⬇️</div>
       </div >
-      <div className=" "> 
+      <div className=" ">
         {projects && projects.map(project => (
           <AllProjects project={project} key={project._id} />
         ))}

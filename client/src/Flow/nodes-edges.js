@@ -3,9 +3,10 @@ import axios from "axios";
 export let initialNodes = [];
 export let initialEdges = [];
 
-export default async function getData() {
+export default async function getData({ id }) {
   try {
-    const response = await axios.get("http://localhost:3000/projects/66f419be58cf21c8a84d0531");
+  console.log(id + " this is the id")
+    const response = await axios.get(`http://localhost:3000/projects/${id}`);
 
     if (response) {
       const children = response.data[0].steps;
@@ -18,7 +19,7 @@ export default async function getData() {
           return {
             id: nodeId,
             // Passing item object in the custom-node
-            data: { label: JSON.stringify(item) || {project: "stepx", language: "python"} },
+            data: { label: JSON.stringify(item) || { project: "stepx", language: "python" } },
             position: { x: 0, y: parseInt(nodeId) * 100 }, // Set default position
             draggable: false,
             resizing: true,

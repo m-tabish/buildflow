@@ -5,8 +5,8 @@ const PORT = 3000;
 const { generateContent } = require("./gemini/index");
 const { Project } = require("./db/mongo")
 require('dotenv').config();
-app.use(cors());
-app.use(express.json());
+app.use(cors()); 
+app.use(express.json({ limit: '10mb' })); // Adjust '10mb' as needed
 
 
 app.get("/", (req, res) => {
@@ -20,11 +20,14 @@ app.get("/", (req, res) => {
 
 app.post("/create-project", async (req, res) => {
     try {
-    //generateContent contains GenAI API function it returns the nodes,edges,steps in json
+        //generateContent contains GenAI API function it returns the nodes,edges,steps in json
         const result = await generateContent(req.body);
-        const { projectname, language } = req.body; 
-        const steps = JSON.parse(result) 
-        const project = await Project.create({ projectname, language, steps });
+
+        console.log("Raw result from generateContent:", result);
+
+        const { projectname, projectDescription, language } = req.body;
+        const steps = JSON.parse(result)
+        const project = await Project.create({ projectname, projectDescription, language, steps });
         res.status(201).json(project);
     } catch (e) {
         console.error("Error creating project:", e);

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-mongoose.connect(process.env.CONNECTION_URL, {  
+mongoose.connect(process.env.CONNECTION_URL, {
   serverSelectionTimeoutMS: 30000 // 30 seconds
 })
   .then(() => console.log('MongoDB connected...'))
@@ -11,6 +11,11 @@ const projectSchema = new mongoose.Schema({
   projectname: {
     type: String,
     required: true,
+  },
+
+  projectDescription: {
+    type: String,
+    required: true
   },
   language: {
     type: String,
