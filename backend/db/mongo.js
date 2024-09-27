@@ -12,7 +12,10 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
+  technologies: {
+    type: Object,
+    required: false
+  },
   projectDescription: {
     type: String,
     required: true
@@ -23,8 +26,8 @@ const projectSchema = new mongoose.Schema({
   },
   steps: {
     type: Object,
-    required: false
-  }
+    required: true
+  },
 });
 
 const Project = mongoose.model('Project', projectSchema);
