@@ -1,10 +1,7 @@
-import path from "path";
-import { fileURLToPath } from "url"; // Import 'fileURLToPath'
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-
-// Resolve the equivalent of __dirname
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import path from "path";
+import { defineConfig } from "vite";
+const __dirname = path.resolve(); // or use `process.cwd()`
 
 export default defineConfig({
   plugins: [react()],
@@ -12,10 +9,17 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
-    build: {
-      rollupOptions: {
-        external: ['react-redux', 'react-router-dom'],
-      },
-    }
   },
+  build: {
+    rollupOptions: {
+      external: [
+        'react',
+        'react-dom',
+        '@reduxjs/toolkit',
+        'react-redux',
+        'react-router-dom',
+        // Add any other packages that cause similar errors
+      ]
+    }
+  }
 });

@@ -8,9 +8,9 @@ export default {
 		"./src/**/*.{js,ts,jsx,tsx}",
 	],
 	theme: {
-		extend: { 
+		extend: {
 			textShadow: {
-				glow: '0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255,1)', // Adjust colors as needed
+				glow: '0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255,1)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
