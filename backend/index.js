@@ -4,7 +4,6 @@ const app = express();
 const PORT = 3000;
 const { generateContent } = require("./gemini/index");
 const { Project } = require("./db/mongo")
-require('dotenv').config();
 app.use(cors());
 app.use(express.json({ limit: '10mb' })); // Adjust '10mb' as needed
 
@@ -26,16 +25,11 @@ app.post("/create-project", async (req, res) => {
         console.log("Raw result from generateContent:", result);
 
         const { projectname, projectDescription, language } = req.body;
-        const steps = JSON.parse(result)
-        const resources = JSON.parse(steps.technologies);
-        console.log(resources.slice(0, 100));
-
-        // const resources = JSON.parse(result.data.resources)
+        const steps = JSON.parse(result)   
         const project = await Project.create({ projectname, projectDescription, language, steps });
         res.status(201).json(project);
     } catch (e) {
-        console.error("Error creating project:", e);
-        res.status(500).send({ msg: "Response not generated" + e });
+        res.status(500).send({ msg: "Response not generated server index :" + e });
     }
 });
 

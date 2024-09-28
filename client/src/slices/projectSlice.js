@@ -1,13 +1,14 @@
 /* eslint-disable no-unused-vars */
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { 
+const initialState = {
     userInput: {
         projectname: "",
         projectDescription: "",
         language: ""
     },
-    viewProject: "ID 12345"
+    viewProject: "ID 12345",
+    colorModeGlobal: "dark"
 };
 
 const projectSlice = createSlice({
@@ -22,9 +23,12 @@ const projectSlice = createSlice({
         },
         viewProject: (state, action) => {
             state.viewProject = action.payload
+        },
+        colorModeGlobal: (state, action) => {
+            state.colorModeGlobal = action.payload
         }
     }
 });
 
-export const { addProject, viewProject } = projectSlice.actions;
+export const { addProject, viewProject,colorModeGlobal} = projectSlice.actions;
 export default projectSlice.reducer;

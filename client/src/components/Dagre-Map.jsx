@@ -2,26 +2,29 @@
 import {
     addEdge,
     ConnectionLineType,
-    Controls,
-    MiniMap,
     Panel,
     ReactFlow,
     ReactFlowProvider,
     useEdgesState,
     useNodesState
 } from '@xyflow/react';
-import dagre from 'dagre';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import getData from "../Flow/nodes-edges";
-import { useSelector } from 'react-redux';
 import '@xyflow/react/dist/style.css';
+import dagre from 'dagre';
+import { ChevronLeft, Moon, Sun } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import getData from "../Flow/nodes-edges";
 import CustomNode from './Custom-node';
-import { useParams } from 'react-router-dom';
+import { Button } from './ui/button';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { colorModeGlobal } from '@/slices/projectSlice';
+
+
+// Function to layout nodes and edges using Dagre
 
 const nodeWidth = 172;
 const nodeHeight = 100;
-
-// Function to layout nodes and edges using Dagre
 const getLayoutedElements = (nodes, edges, direction = 'TB') => {
     const dagreGraph = new dagre.graphlib.Graph();
     const isHorizontal = direction === 'LR';
@@ -59,12 +62,15 @@ const getLayoutedElements = (nodes, edges, direction = 'TB') => {
 
 const LayoutFlow = () => {
     const { id } = useParams()
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-    const [colorMode, setColorMode] = useState('dark');
+    const [colorMode, setColorMode] = useState(useSelector(state => state.colorModeGlobal || "dark"));
     const nodeTypes = useMemo(() => ({ customNode: CustomNode }), []);
-    console.log("id here", id)
+    const dispatch = useDispatch();
+
+    //fetching the projects
     useEffect(() => {
         const fetchData = async () => {
             const { initialNodes, initialEdges } = await getData({ id });
@@ -96,12 +102,10 @@ const LayoutFlow = () => {
         [edges, nodes, setEdges, setNodes]
     );
 
-    const onChange = (evt) => {
-        setColorMode(evt.target.value);
-    };
+
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div>Error Occured </div>;
     }
 
     return (
@@ -124,18 +128,19 @@ const LayoutFlow = () => {
                 panOnDrag={true}
             >
 
-                <Panel position="top-right" className='text-white'>
-                    <button onClick={() => onLayout('TB')}>Vertical Layout</button>
-                    <button onClick={() => onLayout('LR')}>Horizontal Layout</button>
+                <Panel position="top-left" className='text-white'
+                    onClick={() => navigate("/")}>
+                    <Button variant="default" size="icon">
+                        <ChevronLeft className="h-4 w-4" />
+                    </Button>
                 </Panel>
-                <Panel position="top-right">
-                    <select onChange={onChange} data-testid="colormode-select">
-                        <option value="light">light</option>
-                        <option value="dark">dark</option>
-                        <option value="system">system</option>
-                    </select>
-                </Panel>
-
+                {/* Theme switcher (not working properly as of now ) */}
+                {/* <Panel position="top-right">
+                    {colorMode === "dark" ?
+                        (<Button variant="default" size="icon" onClick={() => { setColorMode("light"); dispatch(colorModeGlobal(colorMode)); console.log(colorMode) }}> <Sun className="h-4 w-4 bg-[#FFD700]" /></Button>)
+                        :
+                        (<Button variant="default" size="icon" onClick={() => { setColorMode("dark"); dispatch(colorModeGlobal(colorMode)); console.log(colorMode) }} ><Moon className="h-4 w-4" /> </Button>)}
+                </Panel> */}
             </ReactFlow>
         </div >
     );

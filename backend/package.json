@@ -11,6 +11,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@ai-sdk/google": "^0.0.51",
 		"@ai-sdk/openai": "^0.0.63",
 		"@google/generative-ai": "^0.16.0",
 		"ai": "^3.4.7",
@@ -20,6 +21,7 @@
 		"express": "^4.19.2",
 		"http": "^0.0.1-security",
 		"mongoose": "^8.5.2",
+		"openai": "^4.65.0",
 		"socket.io": "^4.7.5",
 		"ws": "^8.18.0",
 		"zod": "^3.23.8"

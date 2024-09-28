@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import {
     Card,
@@ -10,10 +9,15 @@ import {
     CardTitle
 } from "@/components/ui/card";
 import { viewProject } from "@/slices/projectSlice";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
-function AllProjects({ project }) {
+
+
+
+
+
+function AllProjects({ className, project }) {
 
     const dispatch = useDispatch()
     const navigate = useNavigate();
@@ -23,19 +27,16 @@ function AllProjects({ project }) {
         navigate("/map/" + id)
     }
 
-    useEffect(() => {
-        console.log("View Project State Updated:", view);
-    }, [view]);
     return (
-        <Card className="w-screen flex p-4 rounded outline-none border-none ">
+        <Card  className={`${className} bg-transparent w-screen flex p-4 rounded outline-none  `}  >
             <CardHeader className="w-1/2 text-right flex gap-2">
-                <CardTitle className=" text-lg flex flex-col  font-semibold gap-2">{project.projectname}
+                <CardTitle className=" text-lg flex flex-col  font-semibold  ">{project.projectname}
                     {project.language.trim().split(",").map((lang, index) => {
                         return (
                             <Badge
                                 key={index}
                                 variant={"outline"}
-                                className="self-end text-sm w-fit outline outline-[0.2px] outline-slate-150 items-center"
+                                className="self-end text-sm w-fit items-center"
                             >
                                 {lang.trim()}
                             </Badge>
@@ -49,7 +50,7 @@ function AllProjects({ project }) {
             <CardFooter className="w-1/3 ">
                 <Button onClick={() => clickedView(project._id)}>View</Button>
             </CardFooter>
-        </Card>
+        </Card >
     )
 }
 export default AllProjects

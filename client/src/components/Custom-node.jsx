@@ -8,77 +8,70 @@ import {
     DialogTitle,
     DialogTrigger
 } from "@/components/ui/dialog";
-import { useState } from 'react';
-import { Button } from './ui/button';
+import { Handle, Position } from "@xyflow/react";
+import { useSelector } from "react-redux";
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+
+
 
 export default function CustomNode({ data }) {
+    const colorMode = useSelector((state) => state.colorModeGlobal);
+    const parsedData = JSON.parse(data.label);
 
-    const [showCode, setShowCode] = useState(false);
-    const [showResources, setShowResources] = useState(false);
+    // dark and light theme classes
+    const darkClass = 'border border-black text-black bg-white';
+    const lightClass = 'border border-black text-white bg-black';
+    const currentClass = colorMode === 'dark' ? darkClass : lightClass;
+    console.log(JSON.stringify(data));
+
     return (
-        <div className="flex gap-2 items-center relative ">
+        <div key={colorMode} className="flex gap-2 items-center relative">
+            <div className={`relative text-center font-bold rounded-lg w-[200px] h-auto min-h-[50px] text-xs whitespace-normal p-1 flex flex-col justify-center items-center gap-1 ${currentClass}`}>
+
+                <Handle type="target" position={Position.Top} id="1" />
+                {parsedData.process.length > 100 ? parsedData.process.slice(0, 100) + "..." : parsedData.process}
+
+                {/* Code button */}
+                <Dialog>
+                    <DialogTrigger>Code</DialogTrigger>
+                    <DialogContent className=" max-w-2xl max-h-[500px] overflow-scroll">
+                        <DialogHeader>
+                            <DialogTitle className=" ">Code</DialogTitle>
+                            <DialogDescription className="max-h-1/2 max-w-4xl whitespace-pre-wrap  break-words">
+                                <SyntaxHighlighter wrapLongLines={true} language="javascript" style={vs2015}>
+                                    {parsedData.code}
+                                </SyntaxHighlighter>
+                            </DialogDescription>
+                        </DialogHeader>
+                    </DialogContent>
+                </Dialog>
+
+                {/* Resources Button */}
+                <Dialog>
+                    <DialogTrigger>Resources</DialogTrigger>
+                    <DialogContent className="max-h-1/2 max-w-2xl ">
+                        <DialogHeader>
+                            <DialogTitle>Resources</DialogTitle>
+                            <DialogDescription className="max-w-4xl whitespace-pre-wrap overflow-scroll break-words">
+
+                                {parsedData.resource_to_read_about_the_code_snippet_or_step_you_suggested && parsedData.resource_to_read_about_the_code_snippet_or_step_you_suggested.map((resource, index) => {
+                                    return (<a key={index++} target="_blank" className="black and whte?  q q" href={resource}  >{resource.toString() || "resources"}</a>)
+                                })}
 
 
-            <div className="bg-slate-800  text-white  relative text-center font-bold rounded-lg w-[200px] h-auto min-h-[50px] text-xs whitespace-normal p-1 flex flex-col justify-center items-center gap-1">
-                {/* <Handle type="target" position={Position.Top} id="1" /> */}
-                {JSON.parse(data.label).process.length > 100 ? JSON.parse(data.label).process.slice(0, 100) + "..." : JSON.parse(data.label).process}
-                 
+                            </DialogDescription>
+                        </DialogHeader>
+                    </DialogContent>
+                </Dialog>
 
-                {/* Code button------  */}
-                <Button
-                    className=" bg-zinc-600  text-white w-auto h-fit h-auto p-1 min-w-[35px] inline   rounded-sm whitespace-normal break-words"
-                    onClick={() => setShowCode(true)}
-                >
-                    Code
-                </Button>
-
-                {showCode && (
-
-                    <div
-                        className="absolute left-full  cursor-text select-text ml-2 bg-gray-700 text-white rounded-md p-2 w-[200px] z-10 overflow-hidden overscroll-contain"
-
-                    >
-
-                        <Button
-                            onClick={() => setShowCode(false)}
-                            className="text-white bg-red-500 rounded-sm px-2 py-1 mb-1 float-right"
-                        >
-                            X
-                        </Button>
-                        <pre className="whitespace-pre-wrap text-xs select-text">{JSON.parse(data.label).code}</pre>
-                    </div>
-                )}
-                {/* ----Code button  */}
-
-                {/* Resources Button------ */}
-                <Button
-                    className="bg-red-400 text-white w-auto h-auto min-w-[35px] p-1  inline rounded-sm whitespace-normal break-words"
-                    onClick={() => setShowResources(true)}
-                >
-                    Resources
-                </Button>
-                {showResources && (
-                    <div
-                        className="absolute left-full  cursor-text select-text ml-2 bg-orange-700 text-white rounded-md p-2 w-[200px] z-10 overflow-hidden overscroll-contain"
-
-                    >
-                        <button
-                            onClick={() => setShowResources(false)}
-                            className="text-white bg-red-500 rounded-full px-2 py-1 mb-1 float-right"
-                        >
-                            X
-                        </button>
-                        <pre className="whitespace-pre-wrap text-xs select-text">{JSON.parse(data.label).resources || "resources"}</pre>
-
-                        {/* ------Resources Button */}
-                    </div>
-                )}
-
-                {/* <Handle type="source" position={Position.Bottom} id="1" /> */}
+                <Handle type="source" position={Position.Bottom} id="1" />
             </div>
-
-
-
         </div>
     );
 }
+
+
+
+
+

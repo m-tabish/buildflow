@@ -4,8 +4,7 @@ export let initialNodes = [];
 export let initialEdges = [];
 
 export default async function getData({ id }) {
-  try {
-  console.log(id + " this is the id")
+  try { 
     const response = await axios.get(`http://localhost:3000/projects/${id}`);
 
     if (response) {
