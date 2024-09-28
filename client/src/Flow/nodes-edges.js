@@ -5,7 +5,7 @@ export let initialEdges = [];
 
 export default async function getData({ id }) {
   try { 
-    const response = await axios.get(`http://localhost:3000/projects/${id}`);
+    const response = await axios.get(`https://buildflow-backend.up.railway.app/projects/${id}`);
 
     if (response) {
       const children = response.data[0].steps;

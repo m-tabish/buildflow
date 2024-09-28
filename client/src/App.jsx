@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
-import { ArrowDown, Loader2 } from "lucide-react";
+import { ArrowDown, Loader2, SquareArrowOutUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,6 @@ import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
 import { Textarea } from "./components/ui/textarea";
 import { addProject } from "./slices/projectSlice";
-import { SquareArrowOutUpRight } from 'lucide-react';
 
 function App() {
   // Stores all the projects made till now 
@@ -37,7 +36,7 @@ function App() {
 
     const fetchProjects = async () => {
       try {
-        const projectsData = await axios.get("http://localhost:3000/projects");
+        const projectsData = await axios.get("https://buildflow-backend.up.railway.app/projects");
         setProjects(projectsData.data);
 
       } catch (error) {
@@ -65,7 +64,7 @@ function App() {
       // Sending the user input to the GenAI API using post method
       try {
         console.log("Sending post request");
-        const response = await axios.post("http://localhost:3000/create-project", {
+        const response = await axios.post("https://buildflow-backend.up.railway.app/create-project", {
           projectname: input.project,
           projectDescription: input.projectDescription,
           language: input.language
@@ -81,7 +80,7 @@ function App() {
   };
 
   return (
-    <div className={`h-screen bg-cover bg-fixed bg-center bg-black/10 text-white overflow-none  shadow-none  bg-no-repeat  `}>
+    <div className={`h-screen bg-cover bg-fixed bg-center bg-black/10 text-white overflow-none  shadow-none  bg-no-repeat  overflow-x-hidden`}>
       <div className="fixed -z-20 inset-0 bg-cover bg-center " style={{ backgroundImage: `url(${bg})`, backgroundBlendMode: 'hard-light', opacity: "90%" }}></div>
       <div className=' h-screen flex flex-col  min-w-screen justify-center items-center overflow-visible overscroll-contain'>
         <div className="flex flex-col gap-3 scroll-my-0">
