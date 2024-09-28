@@ -14,14 +14,13 @@ import { addProject } from "./slices/projectSlice";
 function App() {
   // Stores all the projects made till now 
   const [projects, setProjects] = useState([]);
-  const [viewProject, setViewProject] = useState("")
   const [loading, setLoading] = useState(false)
   const [input, setInput] = useState({
     project: "",
     projectDescription: "",
     language: ""
   });
-  const [errorGenerating, setErrorGenerating] = useState(false)
+  const [generation, setGeneration] = useState("")
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,12 +43,12 @@ function App() {
       }
     };
     fetchProjects();
-  }, [input]);
+  }, [input, loading]);
 
 
   //  Submit button function : Runs when submit is clicked
   const handleSubmit = async (e) => {
-    setErrorGenerating(false)
+    setGeneration("")
     setLoading(false)
     e.preventDefault();
     if (input.project && input.projectDescription && input.language) {
@@ -69,10 +68,12 @@ function App() {
           projectDescription: input.projectDescription,
           language: input.language
         });
-        console.log("Post success", response.data._id);
+        if (response) {
+          setGeneration("success")
+        }
         setLoading(false)
       } catch (e) {
-        setErrorGenerating(true)
+        setGeneration("failed")
         setLoading(false)
         console.error("Post request not sent", e);
       }
@@ -128,7 +129,7 @@ function App() {
               />
               <Button
                 type='submit'
-                className=' bg-transparent shadow-teal-500 text-2xl font-bold text-white p-1 shadow-2xl drop-shadow-2xl   mt-10 '
+                className=' bg-transparent  shadow-lg hover:bg-pink-200 hover:text-purple-600 shadow-purple-600 text-2xl font-bold text-white p-1  mt-10 '
                 variant="outline"
               >
 
@@ -138,7 +139,9 @@ function App() {
                     'Submit'
                   )}
               </Button>
-              {errorGenerating && <div className="text-red-600 font-semibold w-full text-sm text-center"> Error Generating content kindly try again.</div>}
+              {generation === "failed" ? (<div className="text-red-600 font-semibold w-full text-sm text-center"> Error Generating content kindly try again.</div>) : generation === "success" ?
+                (<div className="text-green-600 font-semibold w-full text-sm text-center"> Successfully Generated your roadmap. Scroll to find it.</div>) : (<div className="text-white font-semibold w-full text-sm text-center">Click to Generate</div>)}
+
             </span>
           </form>
         </div>
