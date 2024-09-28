@@ -4,15 +4,22 @@ const app = express();
 const PORT = 3000;
 const { generateContent } = require("./gemini/index");
 const { Project } = require("./db/mongo")
-app.use(cors());
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 app.use(express.json({ limit: '10mb' })); // Adjust '10mb' as needed
 require('dotenv').config();
 
 app.get("/", (req, res) => {
     console.log("home");
-    res.send("hello");
+    res.send("hello ");
 });
 
+app.get('/api', (req, res) => {
+  res.json({ message: 'CORS is enabled for all origins!' });
+});
 
 
 //------------------------------GenAI API-----------------------------------------//
