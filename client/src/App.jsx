@@ -92,7 +92,7 @@ function App() {
       <div className=' h-screen flex flex-col  min-w-screen justify-center items-center overflow-visible overscroll-contain'>
         <div className="flex flex-col gap-3 scroll-my-0">
           <div className='text-center flex flex-col font-extrabold text-black  font-mono tracking-tight mb-10 flex-wrap  items-center'>
-            <a className="hover:underline text-[#e9a1ff] flex items-center gap-2 z-10 text-3xl " href="https://x.com/papayafruit123/status/1837139124136083574?t=TumFqAzfBhk4ZnT5EgL5tA&s=19" target="_blank" rel="noopener noreferrer">BUILD FLOW by Team TroGEN <SquareArrowOutUpRight size={"1rem"} /></a>
+            <a className="hover:underline text-[#8619a7]  flex items-center gap-2 z-10 text-3xl " href="https://x.com/papayafruit123/status/1837139124136083574?t=TumFqAzfBhk4ZnT5EgL5tA&s=19" target="_blank" rel="noopener noreferrer">BUILD FLOW by Team TroGEN <SquareArrowOutUpRight size={"1rem"} /></a>
             <div className="text-2xl text-white/60">Generate Roadmaps for your next project.</div>
             <div className="text-base text-black">Scroll down to see latest roadmaps</div>
           </div>
@@ -101,7 +101,7 @@ function App() {
               <label className="text-lg w-auto font-bold ">Project Name</label>
               <Input
                 type="text"
-                className='  outline-none    bg-white/90 placeholder:text-black
+                className='  text-black outline-none  bg-white/90 placeholder:text-black
                  focus:outline-none active:outline-none active:ring-0 focus:ring-0'
                 value={input.project}
                 onChange={(e) => setInput({ ...input, project: e.target.value })}
@@ -114,7 +114,7 @@ function App() {
               <label className="text-lg font-bold  ">Project Description</label>
               <Textarea
                 type="text"
-                className=' outline-none     bg-white/90 placeholder:text-black'
+                className='  text-black  outline-none     bg-white/90 placeholder:text-black'
                 onChange={(e) => setInput({ ...input, projectDescription: e.target.value })}
                 placeholder="Description of your project"
                 value={input.projectDescription}
@@ -126,9 +126,9 @@ function App() {
               <label className="text-lg font-bold  ">Language and Frameworks</label>
               <Input
                 type="text"
-                className=' outline-none focus:ring-0 bg-white/90 placeholder:text-black border-none'
+                className='  text-black outline-none focus:ring-0 bg-white/90 placeholder:text-black/30 border-none'
                 onChange={(e) => setInput({ ...input, language: e.target.value })}
-                placeholder="Languages, Frameworks"
+                placeholder="Javascript..."
                 value={input.language}
                 required
                 minLength={1}
@@ -160,7 +160,7 @@ function App() {
 
 
       {projects && (projects.reverse()).map((project, index) => (
-        <AllProjects className={"relative  z-50 "} project={project} key={project._id} />
+        <AllProjects className={" relative  z-50 "} project={project} key={project._id} />
       ))}
 
 
