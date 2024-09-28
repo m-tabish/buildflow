@@ -6,7 +6,7 @@ import App from './App.jsx'
 import DagreMap from "./components/Dagre-Map.jsx"
 import './index.css'
 import store from './store/store.js'
-import Error404 from './pages/Error404.jsx' 
+import Error404 from './pages/Error404.jsx'
 const router = createBrowserRouter(
   [
 
