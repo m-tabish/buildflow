@@ -12,14 +12,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: [
-        'react',
-        'react-dom',
-        '@reduxjs/toolkit',
-        'react-redux',
-        'react-router-dom',
-        // Add any other packages that cause similar errors
-      ]
+      external: []
     }
   }
 });
