@@ -22,8 +22,7 @@ export default function CustomNode({ data }) {
     // dark and light theme classes
     const darkClass = 'border border-black text-black bg-white';
     const lightClass = 'border border-black text-white bg-black';
-    const currentClass = colorMode === 'dark' ? darkClass : lightClass;
-    console.log(JSON.stringify(data));
+    const currentClass = colorMode === 'dark' ? darkClass : lightClass; 
 
     return (
         <div key={colorMode} className="flex gap-2 items-center relative">

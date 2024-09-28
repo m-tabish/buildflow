@@ -72,12 +72,6 @@ function App() {
         });
         console.log("Post success", response.data._id);
         setLoading(false)
-        // // Cleaning the input boxes
-        // setInput({
-        //   project: "",
-        //   projectDescription: "",
-        //   language: ""
-        // });
       } catch (e) {
         setErrorGenerating(true)
         setLoading(false)
@@ -91,17 +85,17 @@ function App() {
       <div className="fixed -z-20 inset-0 bg-cover bg-center " style={{ backgroundImage: `url(${bg})`, backgroundBlendMode: 'hard-light', opacity: "90%" }}></div>
       <div className=' h-screen flex flex-col  min-w-screen justify-center items-center overflow-visible overscroll-contain'>
         <div className="flex flex-col gap-3 scroll-my-0">
-          <div className='text-center flex flex-col font-extrabold text-black  font-mono tracking-tight mb-10 flex-wrap  items-center'>
-            <a className="hover:underline text-[#8619a7]  flex items-center gap-2 z-10 text-3xl " href="https://x.com/papayafruit123/status/1837139124136083574?t=TumFqAzfBhk4ZnT5EgL5tA&s=19" target="_blank" rel="noopener noreferrer">BUILD FLOW by Team TroGEN <SquareArrowOutUpRight size={"1rem"} /></a>
-            <div className="text-2xl text-white/60">Generate Roadmaps for your next project.</div>
-            <div className="text-base text-black">Scroll down to see latest roadmaps</div>
+          <div className='text-center flex flex-col  text-black   tracking-wider mb-10 flex-wrap  items-center'>
+            <a className="hover:underline   text-black  font-extrabold   flex items-center gap-2 z-10 text-3xl " href="https://x.com/papayafruit123/status/1837139124136083574?t=TumFqAzfBhk4ZnT5EgL5tA&s=19" target="_blank" rel="noopener noreferrer">BUILD FLOW by Team TroGEN <SquareArrowOutUpRight size={"1rem"} /></a>
+            <div className="text-2xl font-semibold  text-white/80">Generate Roadmaps for your next project.</div>
+            <div className="text-base font-semibold  text-black">Scroll down to see latest roadmaps</div>
           </div>
           <form onSubmit={handleSubmit} className='flex flex-col w-3/4 m-auto p-auto gap-3'>
             <span className="flex flex-col gap-2">
               <label className="text-lg w-auto font-bold ">Project Name</label>
               <Input
                 type="text"
-                className='  text-black outline-none  bg-white/90 placeholder:text-black
+                className='  text-black outline-none  bg-white/90 placeholder:text-black/30
                  focus:outline-none active:outline-none active:ring-0 focus:ring-0'
                 value={input.project}
                 onChange={(e) => setInput({ ...input, project: e.target.value })}
@@ -114,7 +108,7 @@ function App() {
               <label className="text-lg font-bold  ">Project Description</label>
               <Textarea
                 type="text"
-                className='  text-black  outline-none     bg-white/90 placeholder:text-black'
+                className='  text-black  outline-none     bg-white/90 placeholder:text-black/30'
                 onChange={(e) => setInput({ ...input, projectDescription: e.target.value })}
                 placeholder="Description of your project"
                 value={input.projectDescription}
