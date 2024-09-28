@@ -2,7 +2,7 @@ const { GoogleGenerativeAI, SchemaType, Schema } = require("@google/generative-a
 const dotenv = require('dotenv');
 dotenv.config()
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "AIzaSyBVgS_a6o7RwD0Y7bIRC97DlAVs4Ehn9II");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 // console.log(process.env.GEMINI_API_KEY); // working
 async function generateContent(body) {
     const prompt = `

@@ -6,7 +6,7 @@ const { generateContent } = require("./gemini/index");
 const { Project } = require("./db/mongo")
 app.use(cors());
 app.use(express.json({ limit: '10mb' })); // Adjust '10mb' as needed
-
+require('dotenv').config();
 
 app.get("/", (req, res) => {
     console.log("home");
@@ -25,7 +25,7 @@ app.post("/create-project", async (req, res) => {
         console.log("Raw result from generateContent:", result);
 
         const { projectname, projectDescription, language } = req.body;
-        const steps = JSON.parse(result)   
+        const steps = JSON.parse(result)
         const project = await Project.create({ projectname, projectDescription, language, steps });
         res.status(201).json(project);
     } catch (e) {
@@ -38,6 +38,7 @@ app.post("/create-project", async (req, res) => {
 
 app.get("/projects", async (req, res) => {
     try {
+
         const projects = await Project.find({})
         res.send(projects)
     }

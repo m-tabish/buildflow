@@ -6,7 +6,7 @@
 
 
 // const google = new createGoogleGenerativeAI({
-//   apiKey: process.env.GEMINI_API_KEY || "AIzaSyBVgS_a6o7RwD0Y7bIRC97DlAVs4Ehn9II"
+//   apiKey: process.env.GEMINI_API_KEY ||  
 // })
 // async function getData() {
 //   try {
