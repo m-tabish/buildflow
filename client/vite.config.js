@@ -14,7 +14,7 @@ export default defineConfig({
     },
     build: {
       rollupOptions: {
-        external: ['react-redux'],
+        external: ['react-redux', 'react-router-dom'],
       },
     }
   },
