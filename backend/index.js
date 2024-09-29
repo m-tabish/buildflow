@@ -27,17 +27,21 @@ app.get('/api', (req, res) => {
 
 app.post("/create-project", async (req, res) => {
     try {
-        //generateContent contains GenAI API function it returns the nodes,edges,steps in json
+        // Generate content using your GenAI API
         const result = await generateContent(req.body);
 
-        const { projectname, projectDescription, language } = req.body;
-        const steps = JSON.parse(result)
-        // const technologies = steps.technologies;
-        // console.log(JSON.stringify(technologies));
+        // Parse the response
+        const response = JSON.parse(result);
 
-        // console.log(JSON.stringify(response.text))
+        var { projectname, projectDescription, language } = req.body;
+        const technologies = response.technologies;
+        projectDescription = response.description; // This should refer to response, not result
+        const steps = response.steps; // Ensure steps are taken from response
 
-        const project = await Project.create({ projectname,  projectDescription, language, steps });
+        console.log(JSON.stringify(response));
+
+        // Create the project with all necessary fields
+        const project = await Project.create({ projectname, technologies, projectDescription, language, steps });
         res.status(201).json(project);
     } catch (e) {
         res.status(500).send({ msg: "Response not generated server index :" + e });

@@ -13,7 +13,7 @@ const projectSchema = new mongoose.Schema({
     required: true,
   },
   technologies: {
-    type: String,
+    type: [String],
     required: false
   },
   projectDescription: {

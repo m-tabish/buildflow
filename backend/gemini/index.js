@@ -9,45 +9,56 @@ async function generateContent(body) {
 Create a roadmap for the a project called ${body.projectname} which is ${body.projectDescription} in ${body.language} .
 Requirements:
 - Each node must have a unique nodeId.
-- Ensure the response stays within the 1024-token generation limit to maintain valid JSON; avoid half responses.
 - The source and target fields in the edges should clearly specify the connections between nodes.
 - The structure must form a non-linear roadmap but shouldn't be confusing.
-- Be as detailed in creating each step as you can. Only talk about 
+- Be as detailed in creating each step as you can.  
 - The response should be valid JSON, easily parseable without errors.  
-Please generate the response as a JSON object following this schema. 
-Generate a highly elaborate response steps with  focusing  on implementation of the core functionality of the project. 
-- Do not try to fit all the steps like deployement, pipelines , devops unless specifically asked.
+- Please generate the response as a JSON object following this schema. 
+- Generate a highly elaborate response steps with  focusing  on implementation of the core functionality of the project. 
+- Do not try to fit all the steps like deployement, pipelines , devops unless specifically asked. 
+- Try explain each step of the core functionality and other steps in general. Always generate at least 15 nodes.
+- (Generate as many steps as you can.)
 Strictly adhere to the following schema:
-{ 
-  "nodes": [
-    {
-      "nodeId": "{unique_id}",
-      "process": "{node title}",
-      "description": "{node description}",
-      "code": "{code snippet}",
-      "resources": "[ relative link for each node on the topic]"o,
-      "target": [
-        "{target_node_id_1}",
-        "{target_node_id_2}"
-      ]
-    }
+{
+  "technologies": [
+    "top Libraries or frameworks maximum 4"
   ],
-  "edges": [
-    {
-      "source": "{source_node_id}",
-      "target": "{target_node_id}",
-      "label": "{edge label}"
-    }
-  ]
+  "description": "{project description in your own words for ${body.projectDescription}}",
+  "steps": {
+    "nodes": [
+      {
+        "nodeId": "{unique_id}",
+        "process": "{node_title}",
+        "description": "{node_description}",
+        "code": "{code_snippet}",
+        "resources": [
+          "{relative_link_1}",
+          "{relative_link_2}"
+        ],
+        "target": [
+          "{target_node_id_1}",
+          "{target_node_id_2}"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "{source_node_id}",
+        "target": "{target_node_id}",
+        "label": "{edge_label}"
+      }
+    ]
+  }
 }
+
 `;
 
   // "technologies": "{Languages frameworks and libraries used. Only top 4 most used.}",
   // "description": "{A brief description of the project by you.}"
 
   let model = genAI.getGenerativeModel({
-    model: "gemini-1.5-pro-latest",
-    generationConfig: { responseMimeType: "application/json", maxOutputTokens: 5000 }
+    model: "gemini-1.5-pro-002",
+    generationConfig: { responseMimeType: "application/json", maxOutputTokens: 1500 }
   });
 
   try {
