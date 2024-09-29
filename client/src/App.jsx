@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import bg from "./assets/bg-black-bg.png";
 import AllProjects from "./components/AllProjects";
+import Socials from "./components/Socials";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
 import { Textarea } from "./components/ui/textarea";
 import { addProject } from "./slices/projectSlice";
-import Socials from "./components/Socials";
 function App() {
   // Stores all the projects made till now 
   const [projects, setProjects] = useState([]);
@@ -79,14 +79,14 @@ function App() {
 
   return (
     <div className={`h-screen bg-cover bg-fixed bg-center bg-black/10 text-white overflow-none  shadow-none  bg-no-repeat  overflow-x-hidden`}>
-      <Socials className={"absolute z-10 top-1/2"} />
+      <Socials className={"hidden   absolute z-10 top-1/3 sm:flex flex-col  gap-2 bg-black text-white rounded-r-lg"} />
       <div className="fixed -z-20 inset-0 bg-cover bg-center " style={{ backgroundImage: `url(${bg})`, backgroundBlendMode: 'hard-light', opacity: "90%" }}></div>
       <div className=' h-screen flex flex-col  min-w-screen justify-center items-center overflow-visible overscroll-contain'>
         <div className="flex flex-col gap-3 scroll-my-0">
           <div className='text-center flex flex-col  text-black   tracking-wider mb-10 flex-wrap  items-center'>
-            <a className="hover:underline   text-black  font-extrabold   flex items-center gap-2 z-10 text-3xl " href="https://x.com/papayafruit123/status/1837139124136083574?t=TumFqAzfBhk4ZnT5EgL5tA&s=19" target="_blank" rel="noopener noreferrer">BUILD FLOW by Team TroGEN <SquareArrowOutUpRight size={"1rem"} /></a>
-            <div className="text-2xl font-semibold  text-white/80">Generate Roadmaps for your next project.</div>
-            <div className="text-base font-semibold  text-black">Scroll down to see latest roadmaps</div>
+            <a className="hover:underline  text-black font-extrabold   flex items-center gap-2 z-10 text-3xl " href="https://x.com/papayafruit123/status/1837139124136083574?t=TumFqAzfBhk4ZnT5EgL5tA&s=19" target="_blank" rel="noopener noreferrer ">BUILD FLOW <SquareArrowOutUpRight size={"1rem"} /></a>
+            <div className="text-2xl font-semibold  text-white/80">Generate a Roadmap for your next project.</div>
+            <div className="text-base font-semibold  text-black">Scroll down to see latest roadmaps <ArrowDown size={"1em"} className=" inline animate-bounce" /></div>
           </div>
           <form onSubmit={handleSubmit} className='flex flex-col w-3/4 m-auto p-auto gap-3'>
             <span className="flex flex-col gap-2">
@@ -138,7 +138,7 @@ function App() {
                   )}
               </Button>
               {generation === "failed" ? (<div className="text-red-600 font-semibold w-full text-sm text-center"> Error Generating content kindly try again.</div>) : generation === "success" ?
-                (<div className="text-green-600 font-semibold w-full text-sm text-center"> Successfully Generated your roadmap. Scroll to find it.</div>) : (<div className="text-white font-semibold w-full text-sm text-center">Click to Generate</div>)}
+                (<div className="text-teal-300  font-semibold w-full text-sm text-center"> Successfully Generated your roadmap. Scroll to find it.</div>) : (<div className="text-white font-semibold w-full text-sm text-center">Click to Generate</div>)}
 
             </span>
           </form>
@@ -150,7 +150,7 @@ function App() {
 
       {/* Showing all the projects made till now  */}
 
-      <div className="  w-full text-center text-4xl mt-[10%] font-mono text-black/80">Check out some samples below   <ArrowDown className="hover:translate-y-3 inline" /></div>
+      <div className="  w-full text-center text-4xl mt-[10%] font-mono text-black/80">Check out what people have made <ArrowDown className="hover:translate-y-3 inline animate-bounce" /></div>
 
 
       {projects ? ((projects.reverse()).map((project, index) => (

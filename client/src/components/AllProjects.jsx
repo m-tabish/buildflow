@@ -54,14 +54,14 @@ function AllProjects({ className, project }) {
     return (
         <Card className={`${className} bg-transparent w-screen flex p-4 rounded  outline-none  border-none  `}  >
             <CardHeader className="w-1/2 text-right flex  ">
-                <CardTitle className=" text-lg flex flex-col  font-semibold  border-none outline-none">{project.projectname}
-                    <div className="flex-end gap-2">
-                        {project.language.trim().split(",").map((lang, index) => {
+                <CardTitle className=" text-lg flex flex-col gap-2 font-semibold  border-none outline-none">{project.projectname}
+                    <div className="flex-end  ">
+                        {project.technologies.map((lang, index) => {
                             return (
                                 <Badge
                                     key={index}
                                     variant={"outline"}
-                                    className="self-end text-sm w-fit items-center border-black"
+                                    className="self-end ml-1 text-xs w-fit items-center border-black"
                                 >
                                     {lang.trim()}
                                 </Badge>

@@ -17,14 +17,15 @@ import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 export default function CustomNode({ data }) {
     const colorMode = useSelector((state) => state.colorModeGlobal);
-
     const parsedData = JSON.parse(data.label);
+
 
     // dark and light theme classes
     const darkClass = 'border border-black text-black bg-white';
     const lightClass = 'border border-black text-white bg-black';
     // const currentClass = colorMode === 'dark' ? darkClass : lightClass;
     const currentClass = "bg-amber-300"
+
 
     return (
         <div className="flex gap-2 items-center relative ">
@@ -40,6 +41,7 @@ export default function CustomNode({ data }) {
                         <DialogHeader>
                             <DialogTitle className=" ">Code</DialogTitle>
                             <DialogDescription className="max-h-1/2 max-w-4xl whitespace-pre-wrap  break-words">
+                                <div className="m-1">{JSON.stringify(parsedData.description)}</div>
                                 <SyntaxHighlighter wrapLongLines={true} language="javascript" style={vs2015}>
                                     {parsedData.code}
                                 </SyntaxHighlighter>
@@ -55,12 +57,13 @@ export default function CustomNode({ data }) {
                         <DialogHeader>
                             <DialogTitle>Resources</DialogTitle>
                             <DialogDescription className="max-w-4xl whitespace-pre-wrap overflow-scroll break-words">
-
-                                {parsedData.resource_to_read_about_the_code_snippet_or_step_you_suggested && parsedData.resource_to_read_about_the_code_snippet_or_step_you_suggested.map((resource, index) => {
-                                    return (<a key={index++} target="_blank" className="black and whte?  q q" href={resource}  >{resource.toString() || "resources"}</a>)
-                                })}
-
-
+                                {parsedData.resources.length !== 0 ? (
+                                    <a className="text-blue-600 underline underline-offset-1" target="_blank" href={`${parsedData.resources}`}>
+                                        {parsedData.resources}
+                                    </a>
+                                ) : (
+                                    "No resources for this"
+                                )}
                             </DialogDescription>
                         </DialogHeader>
                     </DialogContent>

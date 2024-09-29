@@ -138,9 +138,9 @@ const LayoutFlow = () => {
                 </Panel>
                 <Panel position="top-right" className='text-white'
                     onClick={() => console.log("keyboard opened")}>
-                    <Button variant="default" size="icon">
+                    {/* <Button variant="default" size="icon">
                         <KeyboardIcon className="h-4 w-4" />
-                    </Button>
+                    </Button> */}
                 </Panel>
                 {/* Theme switcher (not working properly as of now ) */}
                 {/* <Panel position="top-right">
