@@ -3,7 +3,8 @@ const cors = require("cors");
 const app = express();
 const PORT = 3000;
 const { generateContent } = require("./gemini/index");
-const { Project } = require("./db/mongo")
+const { Project } = require("./db/mongo");
+const e = require("cors");
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -18,7 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.get('/api', (req, res) => {
-  res.json({ message: 'CORS is enabled for all origins!' });
+    res.json({ message: 'CORS is enabled for all origins!' });
 });
 
 
@@ -29,11 +30,14 @@ app.post("/create-project", async (req, res) => {
         //generateContent contains GenAI API function it returns the nodes,edges,steps in json
         const result = await generateContent(req.body);
 
-        console.log("Raw result from generateContent:", result);
-
         const { projectname, projectDescription, language } = req.body;
         const steps = JSON.parse(result)
-        const project = await Project.create({ projectname, projectDescription, language, steps });
+        // const technologies = steps.technologies;
+        // console.log(JSON.stringify(technologies));
+
+        // console.log(JSON.stringify(response.text))
+
+        const project = await Project.create({ projectname,  projectDescription, language, steps });
         res.status(201).json(project);
     } catch (e) {
         res.status(500).send({ msg: "Response not generated server index :" + e });
@@ -70,8 +74,26 @@ app.get("/projects/:id", async (req, res) => {
     }
 })
 
+//---------------------------DELETE----------------------------------   
+app.delete('/delete-project/:id', async (req, res) => {
+    try {
+        const id = req.params["id"];
 
+        // Find and delete the item by ID
+        const deletedItem = await Project.findOneAndDelete({ _id: id });
 
+        if (!deletedItem) {
+            // Return early to avoid multiple response attempts
+            return res.json({ msg: "Item not found" })
+        }
+
+        // If item is found and deleted, send success response
+        return res.json({ message: 'Item deleted successfully', item: deletedItem });
+    } catch (error) {
+        // Handle any unexpected errors
+        return res.sendStatus(500).json({ message: 'Server error', error });
+    }
+});
 
 //---------------------------------LISTEN---------------------------------------//
 

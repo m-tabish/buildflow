@@ -12,15 +12,19 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  technologies: {
+    type: String,
+    required: false
+  },
   projectDescription: {
     type: String,
-    required: true
+    required: false
   },
   language: {
     type: String,
     required: true,
   },
-  steps: {  
+  steps: {
     type: Object,
     required: true
   },
