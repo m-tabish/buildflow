@@ -18,6 +18,8 @@ Requirements:
 - Do not try to fit all the steps like deployement, pipelines , devops unless specifically asked. 
 - Try explain each step of the core functionality and other steps in general. Always generate at least 15 nodes.
 - (Generate as many steps as you can.)
+- I can see sometimes you are leaving the code with simple general comments and not giving actual code. 
+- Always give what actal code would look like . And give me resources for every step
 Strictly adhere to the following schema:
 {
   "technologies": [
@@ -28,7 +30,7 @@ Strictly adhere to the following schema:
     "nodes": [
       {
         "nodeId": "{unique_id}",
-        "process": "{node_title}",
+        "process": "{node_title}",  
         "description": "{node_description}",
         "code": "{code_snippet}",
         "resources": [
