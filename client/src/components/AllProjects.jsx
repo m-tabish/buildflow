@@ -9,12 +9,12 @@ import {
     CardTitle
 } from "@/components/ui/card";
 import { viewProject } from "@/slices/projectSlice";
+import axios from "axios";
 import { Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
-import axios from "axios"
-import { useEffect,useState } from "react";
 
 function AllProjects({ deleteFunction, className, project }) {
     const serverURL = useSelector(state => state.serverURL)
@@ -28,11 +28,7 @@ function AllProjects({ deleteFunction, className, project }) {
         dispatch(viewProject(id))
         navigate("/map/" + id)
     }
-
-    const deleteProject = (id) => {
-        deleteFunction(id)
-    }
-
+ 
     useEffect(() => {
 
         if (deleteId) {
@@ -75,7 +71,7 @@ function AllProjects({ deleteFunction, className, project }) {
             </CardContent>
             <CardFooter className="w-1/3 gap-2 ">
                 <Button onClick={() => clickedView(project._id)}>View</Button>
-                <Button variant={"outline"} onClick={() => deleteProject(project._id)}><Trash2 /></Button>
+                {/* <Button variant={"outline"} onClick={() => deleteProject(project._id)}><Trash2 /></Button> */}
             </CardFooter>
         </Card >
     )
