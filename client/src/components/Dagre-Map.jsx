@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import {
     addEdge,
+    Background, BackgroundVariant,
     ConnectionLineType,
     Panel,
     ReactFlow,
@@ -10,15 +11,13 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import dagre from 'dagre';
-import { ChevronLeft, Moon, Sun } from "lucide-react";
+import { ChevronLeft, KeyboardIcon } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import getData from "../Flow/nodes-edges";
 import CustomNode from './Custom-node';
 import { Button } from './ui/button';
-
-import { useDispatch, useSelector } from 'react-redux';
-import { colorModeGlobal } from '@/slices/projectSlice';
 
 
 // Function to layout nodes and edges using Dagre
@@ -68,12 +67,15 @@ const LayoutFlow = () => {
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [colorMode, setColorMode] = useState(useSelector(state => state.colorModeGlobal || "dark"));
     const nodeTypes = useMemo(() => ({ customNode: CustomNode }), []);
-    const dispatch = useDispatch();
+
+    const serverURL = useSelector(state => state.serverURL)
 
     //fetching the projects
     useEffect(() => {
         const fetchData = async () => {
-            const { initialNodes, initialEdges } = await getData({ id });
+
+            // custom node label
+            const { initialNodes, initialEdges } = await getData({ serverURL, id });
             const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(initialNodes, initialEdges);
             setNodes(layoutedNodes);
             setEdges(layoutedEdges);
@@ -127,11 +129,17 @@ const LayoutFlow = () => {
                 noWheelClassName='nowheel'
                 panOnDrag={true}
             >
-
+                <Background bgColor='#9333ea80' color="#fff" variant={BackgroundVariant.Dots} />
                 <Panel position="top-left" className='text-white'
                     onClick={() => navigate("/")}>
                     <Button variant="default" size="icon">
                         <ChevronLeft className="h-4 w-4" />
+                    </Button>
+                </Panel>
+                <Panel position="top-right" className='text-white'
+                    onClick={() => console.log("keyboard opened")}>
+                    <Button variant="default" size="icon">
+                        <KeyboardIcon className="h-4 w-4" />
                     </Button>
                 </Panel>
                 {/* Theme switcher (not working properly as of now ) */}

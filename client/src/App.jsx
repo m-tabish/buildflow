@@ -3,14 +3,13 @@ import axios from "axios";
 import { ArrowDown, Loader2, SquareArrowOutUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import bg from "./assets/bg-black-bg.png";
 import AllProjects from "./components/AllProjects";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
 import { Textarea } from "./components/ui/textarea";
 import { addProject } from "./slices/projectSlice";
-
+import Socials from "./components/Socials";
 function App() {
   // Stores all the projects made till now 
   const [projects, setProjects] = useState([]);
@@ -21,21 +20,19 @@ function App() {
     language: ""
   });
   const [generation, setGeneration] = useState("")
-
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
 
-  const view = useSelector(state => state.viewProject)
+  const serverURL = useSelector(state => state.serverURL)
+
 
 
 
   // Fetches all the projects
   useEffect(() => {
-
     const fetchProjects = async () => {
       try {
-        const projectsData = await axios.get("https://buildflow-backend.up.railway.app/projects");
+        const projectsData = await axios.get(`${serverURL}/projects`);
         setProjects(projectsData.data);
 
       } catch (error) {
@@ -43,7 +40,7 @@ function App() {
       }
     };
     fetchProjects();
-  }, [input, loading]);
+  }, [input, loading, generation, serverURL]);
 
 
   //  Submit button function : Runs when submit is clicked
@@ -63,7 +60,7 @@ function App() {
       // Sending the user input to the GenAI API using post method
       try {
         console.log("Sending post request");
-        const response = await axios.post("https://buildflow-backend.up.railway.app/create-project", {
+        const response = await axios.post(`${serverURL}/create-project`, {
           projectname: input.project,
           projectDescription: input.projectDescription,
           language: input.language
@@ -82,6 +79,7 @@ function App() {
 
   return (
     <div className={`h-screen bg-cover bg-fixed bg-center bg-black/10 text-white overflow-none  shadow-none  bg-no-repeat  overflow-x-hidden`}>
+      <Socials className={"absolute z-10 top-1/2"} />
       <div className="fixed -z-20 inset-0 bg-cover bg-center " style={{ backgroundImage: `url(${bg})`, backgroundBlendMode: 'hard-light', opacity: "90%" }}></div>
       <div className=' h-screen flex flex-col  min-w-screen justify-center items-center overflow-visible overscroll-contain'>
         <div className="flex flex-col gap-3 scroll-my-0">
@@ -155,9 +153,9 @@ function App() {
       <div className="  w-full text-center text-4xl mt-[10%] font-mono text-black/80">Check out some samples below   <ArrowDown className="hover:translate-y-3 inline" /></div>
 
 
-      {projects && (projects.reverse()).map((project, index) => (
+      {projects ? ((projects.reverse()).map((project, index) => (
         <AllProjects className={" relative  z-50 "} project={project} key={project._id} />
-      ))}
+      ))) : (<div>No projects found</div>)}
 
 
     </div >

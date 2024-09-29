@@ -12,20 +12,44 @@ import { viewProject } from "@/slices/projectSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
-
-
+import { Server, Trash2 } from "lucide-react"
+import { useState, useEffect } from "react";
+import axios from "axios"
 
 
 
 function AllProjects({ className, project }) {
-
+    const serverURL = useSelector(state => state.serverURL)
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const view = useSelector(state => state.viewProject)
+    const [deleteId, setDeleteId] = useState("")
     function clickedView(id) {
         dispatch(viewProject(id))
         navigate("/map/" + id)
     }
+
+    const deleteProject = (id) => {
+        setDeleteId(id)
+    }
+
+    useEffect(() => {
+
+        if (deleteId) {
+            const performDelete = async () => {
+                const result = await axios.delete(`${serverURL}/delete-project/${deleteId}`)
+                if (result) {
+                    setDeleteId("")
+                    return "Item deleted Succesfully"
+                }
+                else {
+                    return "Item could not be deleted"
+                }
+            }
+
+            performDelete()
+        }
+    }, [deleteId, setDeleteId])
 
     return (
         <Card className={`${className} bg-transparent w-screen flex p-4 rounded  outline-none  border-none  `}  >
@@ -49,8 +73,9 @@ function AllProjects({ className, project }) {
             <CardContent className="w-full  flex flex-grow items-center font-sans">
                 <p>{project.projectDescription}</p>
             </CardContent>
-            <CardFooter className="w-1/3 ">
+            <CardFooter className="w-1/3 gap-2 ">
                 <Button onClick={() => clickedView(project._id)}>View</Button>
+                <Button variant={"outline"} onClick={() => deleteProject(project._id)}><Trash2 /></Button>
             </CardFooter>
         </Card >
     )

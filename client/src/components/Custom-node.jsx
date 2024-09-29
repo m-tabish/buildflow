@@ -17,23 +17,25 @@ import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 export default function CustomNode({ data }) {
     const colorMode = useSelector((state) => state.colorModeGlobal);
+
     const parsedData = JSON.parse(data.label);
 
     // dark and light theme classes
     const darkClass = 'border border-black text-black bg-white';
     const lightClass = 'border border-black text-white bg-black';
-    const currentClass = colorMode === 'dark' ? darkClass : lightClass; 
+    // const currentClass = colorMode === 'dark' ? darkClass : lightClass;
+    const currentClass = "bg-amber-300"
 
     return (
-        <div key={colorMode} className="flex gap-2 items-center relative">
+        <div className="flex gap-2 items-center relative ">
             <div className={`relative text-center font-bold rounded-lg w-[200px] h-auto min-h-[50px] text-xs whitespace-normal p-1 flex flex-col justify-center items-center gap-1 ${currentClass}`}>
 
                 <Handle type="target" position={Position.Top} id="1" />
                 {parsedData.process.length > 100 ? parsedData.process.slice(0, 100) + "..." : parsedData.process}
 
                 {/* Code button */}
-                <Dialog>
-                    <DialogTrigger>Code</DialogTrigger>
+                <Dialog >
+                    <DialogTrigger className="bg-red-300 pl-3 pr-3 rounded-sm">Code</DialogTrigger>
                     <DialogContent className=" max-w-2xl max-h-[500px] overflow-scroll">
                         <DialogHeader>
                             <DialogTitle className=" ">Code</DialogTitle>
@@ -48,7 +50,7 @@ export default function CustomNode({ data }) {
 
                 {/* Resources Button */}
                 <Dialog>
-                    <DialogTrigger>Resources</DialogTrigger>
+                    <DialogTrigger className="bg-orange-300 pl-3 pr-3 rounded-sm">Resources</DialogTrigger>
                     <DialogContent className="max-h-1/2 max-w-2xl ">
                         <DialogHeader>
                             <DialogTitle>Resources</DialogTitle>

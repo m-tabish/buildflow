@@ -1,14 +1,14 @@
 import axios from "axios";
-
 export let initialNodes = [];
 export let initialEdges = [];
 
-export default async function getData({ id }) {
-  try { 
-    const response = await axios.get(`https://buildflow-backend.up.railway.app/projects/${id}`);
+export default async function getData({ serverURL, id }) {
+  try {
+    const response = await axios.get(`${serverURL}/projects/${id}`);
 
     if (response) {
       const children = response.data[0].steps;
+      console.log((response.data).toString());
 
 
       // Mapping nodes

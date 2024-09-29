@@ -8,7 +8,9 @@ const initialState = {
         language: ""
     },
     viewProject: "ID 12345",
-    colorModeGlobal: "dark"
+    serverURL: "http://localhost:3000",
+    // deployed_serverURL: "https://buildflow-backend.up.railway.app"
+
 };
 
 const projectSlice = createSlice({
@@ -30,5 +32,5 @@ const projectSlice = createSlice({
     }
 });
 
-export const { addProject, viewProject,colorModeGlobal} = projectSlice.actions;
+export const { addProject, viewProject, colorModeGlobal } = projectSlice.actions;
 export default projectSlice.reducer;
