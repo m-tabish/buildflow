@@ -9,28 +9,28 @@ import {
     CardTitle
 } from "@/components/ui/card";
 import { viewProject } from "@/slices/projectSlice";
+import { Trash2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
-import { Server, Trash2 } from "lucide-react"
-import { useState, useEffect } from "react";
 import axios from "axios"
+import { useEffect,useState } from "react";
 
-
-
-function AllProjects({ className, project }) {
+function AllProjects({ deleteFunction, className, project }) {
     const serverURL = useSelector(state => state.serverURL)
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const view = useSelector(state => state.viewProject)
     const [deleteId, setDeleteId] = useState("")
+
+    console.log(JSON.stringify(project.technologies)) 
     function clickedView(id) {
         dispatch(viewProject(id))
         navigate("/map/" + id)
     }
 
     const deleteProject = (id) => {
-        setDeleteId(id)
+        deleteFunction(id)
     }
 
     useEffect(() => {
@@ -56,7 +56,7 @@ function AllProjects({ className, project }) {
             <CardHeader className="w-1/2 text-right flex  ">
                 <CardTitle className=" text-lg flex flex-col gap-2 font-semibold  border-none outline-none">{project.projectname}
                     <div className="flex-end  ">
-                        {project.technologies.map((lang, index) => {
+                        {project.technologies && project.technologies.map((lang, index) => {
                             return (
                                 <Badge
                                     key={index}
