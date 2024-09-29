@@ -14,11 +14,11 @@ const projectSchema = new mongoose.Schema({
   },
   technologies: {
     type: [String],
-    required: false
+    required: true
   },
   projectDescription: {
     type: String,
-    required: false
+    required: true
   },
   language: {
     type: String,
