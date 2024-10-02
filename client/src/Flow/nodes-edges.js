@@ -8,7 +8,6 @@ export default async function getData({ serverURL, id }) {
 
     if (response) {
       const children = response.data[0].steps;
-      console.log((response.data).toString());
 
 
       // Mapping nodes

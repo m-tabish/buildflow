@@ -7,8 +7,9 @@ const initialState = {
         projectDescription: "",
         language: ""
     },
-    viewProject: "ID 12345", 
+    viewProject: "ID 12345",
     serverURL: "https://buildflow-backend.up.railway.app"
+    // serverURL: "http://localhost:3000"
     // deployed_serverURL: "https://buildflow-backend.up.railway.app"
 
 };

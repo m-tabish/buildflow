@@ -23,12 +23,11 @@ function AllProjects({ deleteFunction, className, project }) {
     const view = useSelector(state => state.viewProject)
     const [deleteId, setDeleteId] = useState("")
 
-    console.log(JSON.stringify(project.technologies)) 
     function clickedView(id) {
         dispatch(viewProject(id))
         navigate("/map/" + id)
     }
- 
+
     useEffect(() => {
 
         if (deleteId) {

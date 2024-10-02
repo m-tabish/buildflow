@@ -56,10 +56,10 @@ export default function CustomNode({ data }) {
                     <DialogContent className="max-h-1/2 max-w-2xl ">
                         <DialogHeader>
                             <DialogTitle>Resources</DialogTitle>
-                            <DialogDescription className="max-w-4xl whitespace-pre-wrap overflow-scroll break-words">
+                            <DialogDescription className="max-w-4xl whitespace-pre-wrap  break-words">
                                 {parsedData.resources.length !== 0 ? (
-                                    <a className="text-blue-600 underline underline-offset-1" target="_blank" href={`${parsedData.resources}`}>
-                                        {parsedData.resources}
+                                    <a className="text-blue-600 whitespace-pre-wrap underline underline-offset-1 " target="_blank" href={`${parsedData.resources}`}>
+                                        {JSON.stringify(parsedData.resources).slice(0, 50)}...
                                     </a>
                                 ) : (
                                     "No resources for this"

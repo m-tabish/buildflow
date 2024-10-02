@@ -32,6 +32,7 @@ function App() {
     const fetchProjects = async () => {
       try {
         const projectsData = await axios.get(`${serverURL}/projects`);
+        console.log(serverURL);
 
         setProjects(projectsData.data)
       } catch (error) {
@@ -39,7 +40,7 @@ function App() {
       }
     };
     fetchProjects();
-  }, [input, loading, generation, serverURL]);
+  }, [ loading, generation, serverURL]);
 
 
   //  Submit button function : Runs when submit is clicked
