@@ -35,8 +35,8 @@ app.post("/create-project", async (req, res) => {
 
         var { projectname, projectDescription, language } = req.body;
         const technologies = response.technologies;
-        projectDescription = response.description; // This should refer to response, not result
-        const steps = response.steps; // Ensure steps are taken from response
+        projectDescription = response.description; 
+        const steps = response.steps;  
 
         // console.log(JSON.stringify(response));
 

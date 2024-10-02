@@ -117,7 +117,7 @@ Follow these guidelines when generating the roadmap:
    a. The source and target fields clearly specify the connections between nodes.
    b. Each edge has a descriptive label explaining the relationship between the connected nodes.
 
-6. Structure the roadmap in a non-linear fashion,generate at least 20 nodes allowing for parallel development paths where appropriate, but avoid making it overly complex or confusing.
+6. Structure the roadmap in a non-linear fashion,generate at least 30 nodes allowing for parallel development paths where appropriate, but avoid making it overly complex or confusing.
 
 7. Prioritize the core functionality of the project. Do not include steps for deployment, pipelines, or DevOps unless specifically mentioned in the project description.
 
@@ -130,7 +130,7 @@ Follow these guidelines when generating the roadmap:
 
   let model = genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
-    generationConfig: { responseMimeType: "application/json", maxOutputTokens: 5000}
+    generationConfig: { responseMimeType: "application/json", maxOutputTokens: 20000}
   });
 
   try {
