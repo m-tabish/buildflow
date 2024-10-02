@@ -4,28 +4,72 @@ dotenv.config()
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 // console.log(process.env.GEMINI_API_KEY); // working
-async function generateContent(body) {
-  const prompt = `
-Create a roadmap for the a project called ${body.projectname} which is ${body.projectDescription} in ${body.language} .
-Requirements:
-- Each node must have a unique nodeId.
-- The source and target fields in the edges should clearly specify the connections between nodes.
-- The structure must form a non-linear roadmap but shouldn't be confusing.
-- Be as detailed in creating each step as you can.  
-- The response should be valid JSON, easily parseable without errors.  
-- Please generate the response as a JSON object following this schema. 
-- Generate a highly elaborate response steps with  focusing  on implementation of the core functionality of the project. 
-- Do not try to fit all the steps like deployement, pipelines , devops unless specifically asked. 
-- Try explain each step of the core functionality and other steps in general. Always generate at least 15 nodes.
-- (Generate as many steps as you can.)
-- I can see sometimes you are leaving the code with simple general comments and not giving actual code. 
-- Always give what actal code would look like . And give me resources for every step
-Strictly adhere to the following schema:
+async function generateContent({ projectname, projectDescription, language }) {
+  //   const prompt = `
+  // Create a roadmap for the a project called ${body.projectname} which is ${body.projectDescription} in ${body.language} .
+  // Requirements:
+  // - Each node must have a unique nodeId.
+  // - The source and target fields in the edges should clearly specify the connections between nodes.
+  // - The structure must form a non-linear roadmap but shouldn't be confusing.
+  // - Be as detailed in creating each step as you can.  
+  // - The response should be valid JSON, easily parseable without errors.  
+  // - Please generate the response as a JSON object following this schema. 
+  // - Generate a highly elaborate response steps with  focusing  on implementation of the core functionality of the project. 
+  // - Do not try to fit all the steps like deployement, pipelines , devops unless specifically asked. 
+  // - Try explain each step of the core functionality and other steps in general. Always generate at least 15 nodes.
+  // - (Generate as many steps as you can.)
+  // - I can see sometimes you are leaving the code with simple general comments and not giving actual code. 
+  // - Always give what actal code would look like . And give me resources for every step
+  // Strictly adhere to the following schema:
+  // {
+  //   "technologies": [
+  //     "top Libraries or frameworks maximum 4"
+  //   ],
+  //   "description": "{project description in your own words for ${body.projectDescription}}",
+  //   "steps": {
+  //     "nodes": [
+  //       {
+  //         "nodeId": "{unique_id}",
+  //         "process": "{node_title}",  
+  //         "description": "{node_description}",
+  //         "code": "{code_snippet}",
+  //         "resources": [
+  //           "{relative_link_1}",
+  //           "{relative_link_2}"
+  //         ],
+  //         "target": [
+  //           "{target_node_id_1}",
+  //           "{target_node_id_2}"
+  //         ]
+  //       }
+  //     ],
+  //     "edges": [
+  //       {
+  //         "source": "{source_node_id}",
+  //         "target": "{target_node_id}",
+  //         "label": "{edge_label}"
+  //       }
+  //     ]
+  //   }
+  // }
+
+  // `;
+
+  // "technologies": "{Languages frameworks and libraries used. Only top 4 most used.}",
+  // "description": "{A brief description of the project by you.}"
+
+  const prompt = `You are tasked with creating a detailed roadmap for a software development project. Your goal is to generate a comprehensive, non-linear roadmap that outlines the steps necessary to implement the core functionality of the project. Keep the response limit strictly under free limit of gemini pro 002 model or your current generation limit. I am experiencing that you are generating very huge responses which come incomplete due to limits in your free tier. I am getting JSON formatting errors. Keep limit strictly under  4000 characters which ever is lesser. Generate proper formatter JSON.
+
+You will be provided with the following information:
+orojectname: ${projectname}
+projectDescription: ${projectDescription}
+language: ${language}  
+Your response should be a valid JSON object that adheres to the following schema:
 {
   "technologies": [
     "top Libraries or frameworks maximum 4"
   ],
-  "description": "{project description in your own words for ${body.projectDescription}}",
+  "description": "{project description in your own words for ${projectDescription}}",
   "steps": {
     "nodes": [
       {
@@ -34,8 +78,7 @@ Strictly adhere to the following schema:
         "description": "{node_description}",
         "code": "{code_snippet}",
         "resources": [
-          "{relative_link_1}",
-          "{relative_link_2}"
+          "{most important and relevant relative_link_1}", 
         ],
         "target": [
           "{target_node_id_1}",
@@ -53,14 +96,41 @@ Strictly adhere to the following schema:
   }
 }
 
-`;
 
-  // "technologies": "{Languages frameworks and libraries used. Only top 4 most used.}",
-  // "description": "{A brief description of the project by you.}"
+Follow these guidelines when generating the roadmap:
+
+1. Start by identifying the top libraries or frameworks (maximum 4) that are most suitable for the project based on the given description and programming language.
+
+2. Write a concise project description in your own words, summarizing the main goals and features of the project.
+
+3. Create at least 30 nodes, each representing a step in the development process. Focus on the implementation of the core functionality of the project. You are most welcomed to generate more nodes there is not limit.
+
+4. For each node:
+   a. Assign a unique nodeId.
+   b. Provide a clear and concise process title.
+   c. Write a detailed description of the step, by step  its purpose and importance in the project.
+   d. Include a relevant code snippet that demonstrates the implementation of this step. The code should be in the specified programming language and as specific as possible to the project requirements.
+   e. Provide at least two relevant resources (such as documentation links, tutorials, or articles) that can help with implementing this step.
+   f. Specify the target node(s) that logically follow this step in the development process.
+
+5. Create edges to connect the nodes, ensuring that:
+   a. The source and target fields clearly specify the connections between nodes.
+   b. Each edge has a descriptive label explaining the relationship between the connected nodes.
+
+6. Structure the roadmap in a non-linear fashion,generate at least 20 nodes allowing for parallel development paths where appropriate, but avoid making it overly complex or confusing.
+
+7. Prioritize the core functionality of the project. Do not include steps for deployment, pipelines, or DevOps unless specifically mentioned in the project description.
+
+8. Ensure that each step is as detailed as possible, providing specific implementation guidance rather than general comments.
+
+9. Remember to generate the response as a valid JSON object that can be easily parsed without errors. Double-check that all required fields are present and correctly formatted .
+
+10. Keep the response limit strictly under free limit of gemini free or your current generation limit. I am experiencing that you are generating very huge responses which come incomplete due to limits in your free tier. Also try to generate the nodes like a tree and not straight line.
+`
 
   let model = genAI.getGenerativeModel({
-    model: "gemini-1.5-pro-002",
-    generationConfig: { responseMimeType: "application/json", maxOutputTokens: 1500 }
+    model: "gemini-1.5-flash",
+    generationConfig: { responseMimeType: "application/json", maxOutputTokens: 5000}
   });
 
   try {
