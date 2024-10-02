@@ -107,7 +107,11 @@ const LayoutFlow = () => {
 
 
     if (loading) {
-        return <div>Error Occured </div>;
+        setTimeout(() => {
+            return <div>Loading</div>;
+        }, 5000)
+        navigate("/error")
+
     }
 
     return (

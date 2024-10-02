@@ -137,7 +137,7 @@ function App() {
                     'Submit'
                   )}
               </Button>
-              {generation === "failed" ? (<div className="text-red-600 font-semibold w-full text-sm text-center"> Error Generating content kindly try again.</div>) : generation === "success" ?
+              {generation === "failed" ? (<div className="text-red-600 font-semibold w-full text-sm text-center"> Error Generating content. Please refresh the page and try again.</div>) : generation === "success" ?
                 (<div className="text-teal-300  font-semibold w-full text-sm text-center"> Successfully Generated your roadmap. Scroll to find it.</div>) : (<div className="text-white font-semibold w-full text-sm text-center">Click to Generate</div>)}
 
             </span>
