@@ -22,7 +22,7 @@ import { Button } from './ui/button';
 
 // Function to layout nodes and edges using Dagre
 
-const nodeWidth = 172;
+const nodeWidth = 1000;
 const nodeHeight = 100;
 const getLayoutedElements = (nodes, edges, direction = 'TB') => {
     const dagreGraph = new dagre.graphlib.Graph();
@@ -62,7 +62,7 @@ const getLayoutedElements = (nodes, edges, direction = 'TB') => {
 const LayoutFlow = () => {
     const { id } = useParams()
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [colorMode, setColorMode] = useState(useSelector(state => state.colorModeGlobal || "dark"));
@@ -105,14 +105,16 @@ const LayoutFlow = () => {
     );
 
 
+    // useEffect(() => {
 
-    if (loading) {
-        setTimeout(() => {
-            return <div>Loading</div>;
-        }, 5000)
-        navigate("/error")
+    //     if (loading) {
+    //         setTimeout(() => {
+    //             return <div>Loading</div>;
+    //         }, 5000)
+    //     }
 
-    }
+
+    // })
 
     return (
         <div className='w-screen  h-screen '>
@@ -126,6 +128,7 @@ const LayoutFlow = () => {
                 connectionLineType={ConnectionLineType.SmoothStep}
                 // snapToGrid={true}
                 fitView
+                minZoom={0}
                 translateExtent={[[-Infinity, -Infinity], [Infinity, Infinity]]}
                 colorMode={colorMode}
                 nodeTypes={nodeTypes}
