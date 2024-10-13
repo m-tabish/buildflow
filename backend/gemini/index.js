@@ -78,7 +78,39 @@ Follow these guidelines when generating the roadmap:
 
 10. Keep the response limit strictly under free limit of gemini free or your current generation limit. I am experiencing that you are generating very huge responses which come incomplete due to limits in your free tier. Also try to generate the nodes like a tree and not straight line.
 
-11. I am seeing you are not providing the edges object. Strictly follow the given format of JSON
+<Remember>11. I am seeing you are not providing the edges object. Strictly follow the given format of JSON  
+ Your response should be a valid JSON object that adheres to the following schema:
+{
+  "technologies": [
+    "top Libraries or frameworks maximum 4"
+  ],
+  "description": "{project description in your own words for ${projectDescription}}",
+  "steps": {
+    "nodes": [
+      {
+        "nodeId": "{unique_id}",
+        "process": "{node_title}",  
+        "description": "{node_description}",
+        "code": "{code_snippet}",
+        "resources": [
+          "{most important and relevant relative_link_1}", 
+        ],
+        "target": [
+          "{target_node_id_1}",
+          "{target_node_id_2}"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "{source_node_id}",
+        "target": "{target_node_id}",
+        "label": "{edge_label}"
+      }
+    ]
+  }
+}
+<Remember>
 `
 
   let model = genAI.getGenerativeModel({
