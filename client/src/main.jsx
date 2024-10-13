@@ -5,22 +5,23 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from './App.jsx'
 import DagreMap from "./components/Dagre-Map.jsx"
 import './index.css'
-import store from './store/store.js'
 import Error404 from './pages/Error404.jsx'
+import store from './store/store.js'
 const router = createBrowserRouter(
   [
 
     {
       path: "/",
-      element: <App />
+      // element: <App />
+      element: <Error404 />
     },
     {
       path: "/map/:id",
       element: <DagreMap />
     },
     {
-      path: "/error",
-      element: <Error404 />
+      path: "/app",
+      element: <App />
     }
   ]
 )
