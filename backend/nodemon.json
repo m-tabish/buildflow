@@ -1,6 +1,0 @@
-{
-  "env": {
-    "GEMINI_API_KEY": "AIzaSyAGhyWAfD4bckDqZgs6eYeImMOeFeNSfjY",
-    "CONNECTION_URL": "mongodb+srv://admin:admin@cluster0.kzbam.mongodb.net/"
-  }
-}
