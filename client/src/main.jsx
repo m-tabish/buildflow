@@ -13,15 +13,15 @@ const router = createBrowserRouter(
     {
       path: "/",
       // element: <App />
-      element: <Error404 />
+      element: <App />
     },
     {
       path: "/map/:id",
       element: <DagreMap />
     },
     {
-      path: "/app",
-      element: <App />
+      path: "/error",
+      element: <Error404/>
     }
   ]
 )
