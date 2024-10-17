@@ -40,7 +40,7 @@ function App() {
       }
     };
     fetchProjects();
-  }, [ loading, generation, serverURL]);
+  }, [loading, generation, serverURL]);
 
 
   //  Submit button function : Runs when submit is clicked
