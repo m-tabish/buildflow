@@ -84,7 +84,7 @@ function App() {
       <div className=' h-screen flex flex-col  min-w-screen justify-center items-center overflow-visible overscroll-contain'>
         <div className="flex flex-col gap-3 scroll-my-0">
           <div className='text-center flex flex-col  text-black   tracking-wider mb-10 flex-wrap  items-center'>
-            <a className="hover:underline  text-black font-extrabold   flex items-center gap-2 z-10 text-3xl " href="https://x.com/papayafruit123/status/1837139124136083574?t=TumFqAzfBhk4ZnT5EgL5tA&s=19" target="_blank" rel="noopener noreferrer ">BUILD FLOW <SquareArrowOutUpRight size={"1rem"} /></a>
+            <a className="hover:underline  text-black font-extrabold   flex items-center gap-2 z-10 text-3xl " href="https://x.com/damnthesebugs/status/1840646848270492084" target="_blank" rel="noopener noreferrer ">BUILD FLOW <SquareArrowOutUpRight size={"1rem"} /></a>
             <div className="text-2xl font-semibold  text-white/80">Generate a Roadmap for your next project.</div>
             <div className="text-base font-semibold  text-black">Scroll down to see latest roadmaps <ArrowDown size={"1em"} className=" inline animate-bounce" /></div>
           </div>
