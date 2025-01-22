@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "nodemon index.js",
+		"dev": "node index.js",
 		"start": "node index.js",
 		"build": "npm install"
 	},
@@ -23,6 +23,7 @@
 		"express": "^4.19.2",
 		"http": "^0.0.1-security",
 		"mongoose": "^8.5.2",
+		"nodemon": "^3.1.9",
 		"openai": "^4.65.0",
 		"socket.io": "^4.7.5",
 		"ws": "^8.18.0",
