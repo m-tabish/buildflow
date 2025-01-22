@@ -26,3 +26,4 @@ dist-ssr
 projectRoadmap-steps.js
 backend/.env
 prompts.txt
+client\serverless\keys.js
