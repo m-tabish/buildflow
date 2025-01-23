@@ -26,6 +26,7 @@ function App() {
 
   const serverURL = useSelector(state => state.serverURL)
 
+  console.log(serverURL);
 
   // Fetches all the projects
   useEffect(() => {
