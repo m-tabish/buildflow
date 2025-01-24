@@ -73,7 +73,7 @@ function App() {
       } catch (e) {
         setGeneration("failed")
         setLoading(false)
-        console.error("Post request not sent", e);
+        console.log("Post request not sent", e);
       }
     }
   };
