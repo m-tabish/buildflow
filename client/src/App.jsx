@@ -10,6 +10,8 @@ import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
 import { Textarea } from "./components/ui/textarea";
 import { addProject } from "./slices/projectSlice";
+import countapi from "countapi-js"
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -39,14 +41,14 @@ function App() {
 
   const serverURL = useSelector(state => state.serverURL)
 
-  console.log(serverURL);
+  // console.log(serverURL);
 
   // Fetches all the projects
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const projectsData = await axios.get(`${serverURL}/projects`);
-        console.log(serverURL);
+ 
 
         setProjects(projectsData.data)
       } catch (error) {
@@ -91,6 +93,10 @@ function App() {
     }
   };
 
+
+  countapi.visits('global').then((result) => {
+    console.log(result.value);
+  });
   return (
     <div className={`h-screen bg-cover bg-fixed  bg-center m-auto bg-black/10 text-white overflow-none  shadow-none  bg-no-repeat  overflow-x-hidden`}>
 
