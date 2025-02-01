@@ -10,6 +10,19 @@ import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
 import { Textarea } from "./components/ui/textarea";
 import { addProject } from "./slices/projectSlice";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
+
 function App() {
   // Stores all the projects made till now 
   const [projects, setProjects] = useState([]);
@@ -79,8 +92,10 @@ function App() {
   };
 
   return (
-    <div className={`h-screen bg-cover bg-fixed bg-center bg-black/10 text-white overflow-none  shadow-none  bg-no-repeat  overflow-x-hidden`}> 
+    <div className={`h-screen bg-cover bg-fixed  bg-center m-auto bg-black/10 text-white overflow-none  shadow-none  bg-no-repeat  overflow-x-hidden`}>
+
       <Socials className={"hidden   absolute z-10 top-1/3 sm:flex flex-col  gap-2 bg-black text-white rounded-r-lg"} />
+      <div className="text-center text-red-400 ">NOTE: Since the backend is hosted on a free tier on Render, it takes <span>50 seconds</span> for the server to start.</div>
       <div className="fixed -z-20 inset-0 bg-cover bg-center " style={{ backgroundImage: `url(${bg})`, backgroundBlendMode: 'hard-light', opacity: "90%" }}></div>
       <div className=' h-screen flex flex-col  min-w-screen justify-center items-center overflow-visible overscroll-contain'>
         <div className="flex flex-col gap-3 scroll-my-0">
