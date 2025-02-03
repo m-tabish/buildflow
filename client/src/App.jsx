@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
+import countapi from "countapi-js";
 import { ArrowDown, Loader2, SquareArrowOutUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,19 +11,7 @@ import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
 import { Textarea } from "./components/ui/textarea";
 import { addProject } from "./slices/projectSlice";
-import countapi from "countapi-js"
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
 
 
 function App() {
@@ -48,7 +37,7 @@ function App() {
     const fetchProjects = async () => {
       try {
         const projectsData = await axios.get(`${serverURL}/projects`);
- 
+        // console.log(serverURL)
 
         setProjects(projectsData.data)
       } catch (error) {
