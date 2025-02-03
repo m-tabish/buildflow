@@ -2,10 +2,10 @@ const { GoogleGenerativeAI, SchemaType, Schema } = require("@google/generative-a
 const dotenv = require('dotenv');
 dotenv.config()
 
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 
-
+console.log(process.env.GEMINI_API_KEY)
 async function generateContent({ projectname, projectDescription, language }) {
 
 
@@ -36,6 +36,8 @@ Your response should be a valid JSON object that adheres to the following schema
           "{target_node_id_2}"
         ]
       }
+      
+     
     ],
     "edges": [
       {
@@ -133,5 +135,5 @@ Follow these guidelines when generating the roadmap:
 //     projectname: " Game",
 //     projectDescription: "a snake game",
 //     language: "python ",
-// })
-export { generateContent };
+// })  
+module.exports = {generateContent};
