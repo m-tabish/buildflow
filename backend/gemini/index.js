@@ -4,8 +4,7 @@ dotenv.config()
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-
-console.log(process.env.GEMINI_API_KEY)
+ 
 async function generateContent({ projectname, projectDescription, language }) {
 
 
