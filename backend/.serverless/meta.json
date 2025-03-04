@@ -1,0 +1,47 @@
+{
+  "E:\\CODE\\buildflow\\backend\\serverless.yml": {
+    "versionFramework": "4.6.2",
+    "servicePath": "E:\\CODE\\buildflow\\backend\\serverless.yml",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "service": "telegram-bot-app",
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs20.x",
+        "region": "ap-south-1",
+        "environment": {
+          "AWS_PROFILE": "iamtabish"
+        }
+      },
+      "functions": {
+        "hello": {
+          "handler": "handler.hello",
+          "events": [
+            {
+              "http": {
+                "path": "hello",
+                "method": "get"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "provider": {
+      "name": "aws",
+      "runtime": "nodejs20.x",
+      "region": "ap-south-1",
+      "environment": {
+        "AWS_PROFILE": "iamtabish"
+      }
+    },
+    "serviceRawFile": "service: telegram-bot-app\n\nprovider:\n  name: aws\n  runtime: nodejs20.x\n  region: ap-south-1\n  environment:\n    AWS_PROFILE: iamtabish\n\nfunctions:\n  hello:\n    handler: handler.hello\n    events:\n      - http:\n          path: hello\n          method: get\n",
+    "command": [],
+    "options": {},
+    "serviceProviderAwsCfStackId": null,
+    "serviceProviderAwsCfStackCreated": null,
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": null,
+    "serviceProviderAwsCfStackOutputs": null
+  }
+}

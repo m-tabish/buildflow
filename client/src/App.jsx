@@ -11,10 +11,24 @@ import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
 import { Textarea } from "./components/ui/textarea";
 import { addProject } from "./slices/projectSlice";
-
-
-
+import logo from "./assets/logo.png"
+import { Analytics } from "@vercel/analytics/react";
 function App() {
+  async function call_backend() {
+    try {
+      const resp = await axios.get("https://buildflow-backend.onrender.com/")
+      console.log('backend hit', resp.data);
+    }
+    catch (e) {
+      console.log(e)
+    }
+
+  }
+
+  useEffect(() => {
+    call_backend()
+  }, [])
+
   // Stores all the projects made till now 
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false)
@@ -88,14 +102,17 @@ function App() {
   });
   return (
     <div className={`h-screen bg-cover bg-fixed  bg-center m-auto bg-black/10 text-white overflow-none  shadow-none  bg-no-repeat  overflow-x-hidden`}>
-
+      <Analytics />
       <Socials className={"hidden   absolute z-10 top-1/3 sm:flex flex-col  gap-2 bg-black text-white rounded-r-lg"} />
       <div className="text-center text-red-400 ">NOTE: Since the backend is hosted on a free tier on Render, it takes <span>50 seconds</span> for the server to start.</div>
       <div className="fixed -z-20 inset-0 bg-cover bg-center " style={{ backgroundImage: `url(${bg})`, backgroundBlendMode: 'hard-light', opacity: "90%" }}></div>
       <div className=' h-screen flex flex-col  min-w-screen justify-center items-center overflow-visible overscroll-contain'>
         <div className="flex flex-col gap-3 scroll-my-0">
           <div className='text-center flex flex-col  text-black   tracking-wider mb-10 flex-wrap  items-center'>
-            <a className="hover:underline  text-black font-extrabold   flex items-center gap-2 z-10 text-3xl " href="https://x.com/damnthesebugs/status/1840646848270492084" target="_blank" rel="noopener noreferrer ">BUILD FLOW <SquareArrowOutUpRight size={"1rem"} /></a>
+            <a className="hover:underline  w-[300px] text-transparent h-24 mx-auto bg-center  font-extrabold  justify-between flex items-center gap-10 z-10 text-3xl " href="https://x.com/damnthesebugs/status/1840646848270492084" target="_blank" rel="noopener noreferrer " style={{ backgroundImage: `url(${logo})`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }}>
+              <div> BUILD FLOWd</div>
+              <SquareArrowOutUpRight size={"1rem"} color="black"/>
+            </a>
             <div className="text-2xl font-semibold  text-white/80">Generate a Roadmap for your next project.</div>
             <div className="text-base font-semibold  text-black">Scroll down to see latest roadmaps <ArrowDown size={"1em"} className=" inline animate-bounce" /></div>
           </div>
