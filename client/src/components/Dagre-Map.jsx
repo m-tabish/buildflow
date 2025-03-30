@@ -11,7 +11,7 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import dagre from 'dagre';
-import { ChevronLeft, KeyboardIcon } from "lucide-react";
+import { ChevronLeft, KeyboardIcon, MessageCircle } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -105,16 +105,6 @@ const LayoutFlow = () => {
     );
 
 
-    // useEffect(() => {
-
-    //     if (loading) {
-    //         setTimeout(() => {
-    //             return <div>Loading</div>;
-    //         }, 5000)
-    //     }
-
-
-    // })
 
     return (
         <div className='w-screen  h-screen '>
@@ -143,19 +133,7 @@ const LayoutFlow = () => {
                         <ChevronLeft className="h-4 w-4" />
                     </Button>
                 </Panel>
-                <Panel position="top-right" className='text-white'
-                    onClick={() => console.log("keyboard opened")}>
-                    {/* <Button variant="default" size="icon">
-                        <KeyboardIcon className="h-4 w-4" />
-                    </Button> */}
-                </Panel>
-                {/* Theme switcher (not working properly as of now ) */}
-                {/* <Panel position="top-right">
-                    {colorMode === "dark" ?
-                        (<Button variant="default" size="icon" onClick={() => { setColorMode("light"); dispatch(colorModeGlobal(colorMode)); console.log(colorMode) }}> <Sun className="h-4 w-4 bg-[#FFD700]" /></Button>)
-                        :
-                        (<Button variant="default" size="icon" onClick={() => { setColorMode("dark"); dispatch(colorModeGlobal(colorMode)); console.log(colorMode) }} ><Moon className="h-4 w-4" /> </Button>)}
-                </Panel> */}
+                
             </ReactFlow>
         </div >
     );

@@ -78,7 +78,7 @@ app.get("/projects/:id", async (req, res) => {
     }
 })
 
-//---------------------------DELETE----------------------------------   
+//---------------------------DELETE----------------------------------
 app.delete('/delete-project/:id', async (req, res) => {
     try {
         const id = req.params["id"];

@@ -1,18 +1,19 @@
 /* eslint-disable no-unused-vars */
+import { Analytics } from "@vercel/analytics/react";
 import axios from "axios";
 import countapi from "countapi-js";
 import { ArrowDown, Loader2, SquareArrowOutUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import bg from "./assets/bg-black-bg.png";
+import logo from "./assets/logo.png";
 import AllProjects from "./components/AllProjects";
-import Socials from "./components/Socials";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
 import { Textarea } from "./components/ui/textarea";
 import { addProject } from "./slices/projectSlice";
-import logo from "./assets/logo.png"
-import { Analytics } from "@vercel/analytics/react";
+import Socials from "./components/Socials";
+
 function App() {
   async function call_backend() {
     try {
@@ -100,25 +101,33 @@ function App() {
   countapi.visits('global').then((result) => {
     console.log(result.value);
   });
+
+
   return (
-    <div className={`h-screen bg-cover bg-fixed  bg-center m-auto bg-black/10 text-white overflow-none  shadow-none  bg-no-repeat  overflow-x-hidden`}>
+    <div className={`h-screen  bg-cover bg-fixed  bg-center m-auto bg-black/10 text-white overflow-none  shadow-none  bg-no-repeat  overflow-x-hidden`}>
       <Analytics />
-      <Socials className={"hidden   absolute z-10 top-1/3 sm:flex flex-col  gap-2 bg-black text-white rounded-r-lg"} />
-      <div className="text-center text-red-400 ">NOTE: Since the backend is hosted on a free tier on Render, it takes <span>50 seconds</span> for the server to start.</div>
-      <div className="fixed -z-20 inset-0 bg-cover bg-center " style={{ backgroundImage: `url(${bg})`, backgroundBlendMode: 'hard-light', opacity: "90%" }}></div>
-      <div className=' h-screen flex flex-col  min-w-screen justify-center items-center overflow-visible overscroll-contain'>
+      <Socials className={'absolute top-1/3 bg-white rounded-sm'} />
+      <p className="text-center  text-red-400 ">NOTE:Since the backend is hosted on a free tier on Render, it takes <span className="font-black text-[#f01200]">50 seconds</span> for the server to start.</p>
+
+      <div className="fixed -z-20 inset-0 bg-cover bg-center " style={{ backgroundImage: `url(${bg})`, backgroundBlendMode: 'hard-light', opacity: "90%" }}>
+      </div>
+      <div className='h-screen flex flex-col  min-w-screen justify-center items-center overflow-visible overscroll-contain'>
         <div className="flex flex-col gap-3 scroll-my-0">
           <div className='text-center flex flex-col  text-black   tracking-wider mb-10 flex-wrap  items-center'>
             <a className="hover:underline  w-[300px] text-transparent h-24 mx-auto bg-center  font-extrabold  justify-between flex items-center gap-10 z-10 text-3xl " href="https://x.com/damnthesebugs/status/1840646848270492084" target="_blank" rel="noopener noreferrer " style={{ backgroundImage: `url(${logo})`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }}>
-              <div> BUILD FLOWd</div>
-              <SquareArrowOutUpRight size={"1rem"} color="black"/>
+              <div> BUILD FLOW</div>
+              <SquareArrowOutUpRight size={"1rem"} color="black" />
             </a>
             <div className="text-2xl font-semibold  text-white/80">Generate a Roadmap for your next project.</div>
-            <div className="text-base font-semibold  text-black">Scroll down to see latest roadmaps <ArrowDown size={"1em"} className=" inline animate-bounce" /></div>
+            <div className="text-base font-semibold  text-black">Scroll down to see latest roadmaps <ArrowDown size={"1em"} className=" inline animate-bounce" />
+            </div>
           </div>
+
+
+          {/* Project Form  */}
           <form onSubmit={handleSubmit} className='flex flex-col w-3/4 m-auto p-auto gap-3'>
             <span className="flex flex-col gap-2">
-              <label className="text-lg w-auto font-bold ">Project Name</label>
+              <label className="text-lg w-auto font-bold active:border ">Project Name</label>
               <Input
                 type="text"
                 className='  text-black outline-none  bg-white/90 placeholder:text-black/30
@@ -134,7 +143,7 @@ function App() {
               <label className="text-lg font-bold  ">Project Description</label>
               <Textarea
                 type="text"
-                className='  text-black  outline-none     bg-white/90 placeholder:text-black/30'
+                className='  text-black  outline-none  active:border    bg-white/90 placeholder:text-black/30'
                 onChange={(e) => setInput({ ...input, projectDescription: e.target.value })}
                 placeholder="Description of your project"
                 value={input.projectDescription}
@@ -142,11 +151,11 @@ function App() {
                 minLength={1}
               />
             </span>
-            <span className="flex flex-col gap-2">
+            <span className="flex flex-col gap-2 ">
               <label className="text-lg font-bold  ">Language and Frameworks</label>
               <Input
                 type="text"
-                className='  text-black outline-none focus:ring-0 bg-white/90 placeholder:text-black/30 border-none'
+                className='  text-black outline-none  active:border focus:ring-0 bg-white/90 placeholder:text-black/30 border-none'
                 onChange={(e) => setInput({ ...input, language: e.target.value })}
                 placeholder="Javascript..."
                 value={input.language}
@@ -155,7 +164,7 @@ function App() {
               />
               <Button
                 type='submit'
-                className=' bg-transparent  shadow-lg hover:bg-pink-200 hover:text-purple-600 shadow-purple-600 text-2xl font-bold text-white p-1  mt-10 '
+                className=' bg-transparent    hover:border-1 hover:border-black  shadow-lg hover:bg-pink-200 hover:text-purple-600 shadow-purple-600 text-2xl font-bold text-white p-1  mt-10 '
                 variant="outline"
               >
 
@@ -170,7 +179,10 @@ function App() {
 
             </span>
           </form>
+
+
         </div>
+
       </div >
 
 
