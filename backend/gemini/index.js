@@ -4,14 +4,14 @@ dotenv.config()
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
- 
-async function generateContent({ projectname, projectDescription, language }) {
+
+async function generateContent({ projectName, projectDescription, language }) {
 
 
   const prompt = `You are tasked with creating a detailed roadmap for a software development project. Your goal is to generate a comprehensive, non-linear roadmap that outlines the steps necessary to implement the core functionality of the project. Keep the response limit strictly under free limit of gemini pro 002 model or your current generation limit. I am experiencing that you are generating very huge responses which come incomplete due to limits in your free tier. I am getting JSON formatting errors. Keep limit strictly under  4000 characters which ever is lesser. Generate proper formatter JSON.
 
 You will be provided with the following information:
-orojectname: ${projectname}
+orojectname: ${projectName}
 projectDescription: ${projectDescription}
 language: ${language}  
 Your response should be a valid JSON object that adheres to the following schema:
@@ -115,7 +115,7 @@ Follow these guidelines when generating the roadmap:
 `
 
   let model = genAI.getGenerativeModel({
-    model: "gemini-1.5-pro-latest",
+    model: "gemini-2.0-flash",
     generationConfig: { responseMimeType: "application/json", maxOutputTokens: 20000 }
   });
 
@@ -131,8 +131,8 @@ Follow these guidelines when generating the roadmap:
   }
 }
 // generateContent({
-//     projectname: " Game",
+//     projectName: " Game",
 //     projectDescription: "a snake game",
 //     language: "python ",
 // })  
-module.exports = {generateContent};
+module.exports = { generateContent };
