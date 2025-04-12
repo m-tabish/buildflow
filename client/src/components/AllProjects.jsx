@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/card";
 import { viewProject } from "@/slices/projectSlice";
 import axios from "axios";
-import { Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

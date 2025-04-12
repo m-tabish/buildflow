@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     userInput: {
-        projectname: "",
+        projectName: "",
         projectDescription: "",
         language: ""
     },
