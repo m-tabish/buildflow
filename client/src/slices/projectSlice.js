@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     userInput: {
-        projectName: "",
+        projectname: "",
         projectDescription: "",
         language: ""
     },
@@ -20,7 +20,7 @@ const projectSlice = createSlice({
     reducers: {
         addProject: (state, action) => {
             // Directly update state.userInput
-            state.userInput.project = action.payload.project;
+            state.userInput.projectname = action.payload.projectname;
             state.userInput.projectDescription = action.payload.projectDescription;
             state.userInput.language = action.payload.language;
         },
