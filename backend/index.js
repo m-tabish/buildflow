@@ -29,11 +29,12 @@ app.post("/create-project", async (req, res) => {
     try {
         // Generate content using your GenAI API
         const result = await generateContent(req.body);
+        console.log("Req.body in index \n", req.body)
 
         // Parse the response
         const response = JSON.parse(result);
 
-        var { projectName, projectDescription, language } = req.body;
+        var { projectname, projectDescription, language } = req.body;
         const technologies = response.technologies;
         projectDescription = response.description;
         const steps = response.steps;
@@ -41,10 +42,10 @@ app.post("/create-project", async (req, res) => {
         // console.log(JSON.stringify(response));
 
         // Create the project with all necessary fields
-        const project = await Project.create({ projectName, technologies, projectDescription, language, steps });
+        const project = await Project.create({ projectname, technologies, projectDescription, language, steps });
         res.status(201).json(project);
     } catch (e) {
-        res.status(500).send({ msg: "Response not generated server index :" + e });
+        res.status(500).send({ msg: "Response not generated server index 34 :" + e });
     }
 });
 
